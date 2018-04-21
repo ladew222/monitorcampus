@@ -96,12 +96,11 @@ class App extends Component {
       cssEase: "linear",
       arrows: false,
     };
-    return (
+    return ( //here is the content
 
         <div className="App">
         <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-
         </header>
         <div className="outer">
         {sound}
@@ -109,7 +108,7 @@ class App extends Component {
           {this.state.photos.map((photo, key) => { //loop through photos to output each photo inside slider widget
           return (
               <div key={photo.nid} className="slide-outer">
-                  {console.log(photo)}
+              {console.log(photo)}
               <div className="slide-container">
               {photo.Type === 'Event' ? ( //differnt content depending on type
                 <div>
