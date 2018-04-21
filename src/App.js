@@ -111,7 +111,7 @@ class App extends Component {
               {console.log(photo)}
               <div className="slide-container">
               {photo.Type === 'Event' ? ( //differnt content depending on type
-                <div>
+                <div className="inner-slide event">
                 <h1 >{photo.title}</h1>
                 <img alt="banner" className="scroll-img" src= {this.server_name + photo.field_event_image}/>
                 <h4>{photo.field_event_dates}</h4>
@@ -120,7 +120,7 @@ class App extends Component {
                 <p>{photo.body}</p>
                 </div>
               ) : (//image type
-                <div>
+                <div className="inner-slide photo">
                 <img alt="banner" className="scroll-img" style={fillimg} src= {this.server_name + photo.field_banner_image}/>
                 </div>
               )}

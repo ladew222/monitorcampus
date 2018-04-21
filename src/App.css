@@ -7,6 +7,8 @@
   animation: App-logo-spin infinite 20s linear;
   height: 60px;
   float:left;
+  padding-left: 70px;
+  padding-top: 20px;
 }
 
 .App-header {
@@ -35,8 +37,7 @@
 }
 
 .slick-slide div {
-  display: table-cell;
-  vertical-align: middle;
+
 }
 .scroll-img{
   margin:auto;
@@ -47,5 +48,12 @@
 
 }
 .slide-outer{
+}
+.inner-slide{
+  display: table-cell;
+  vertical-align: middle;
+}
+.slide-container{
   display: table;
+  height: 800px;
 }
