@@ -92,7 +92,7 @@ class App extends Component {
       slidesToScroll: 1,
       autoplay: true,
       speed: 1000,
-      autoplaySpeed: speed,
+      autoplaySpeed: 5000,
       cssEase: "linear",
       arrows: false,
     };
