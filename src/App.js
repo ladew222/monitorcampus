@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import request from 'superagent';
 import logo from './logo-red.svg';
 import './App.css';
-import Slider from "react-slick";
-import Sound from 'react-sound';
+import Slider from "react-slick";  //slider library loaded via npm
+import Sound from 'react-sound';  //sound library loaded via npm
 
-
+//centering inline css for slide
 let fillimg = {
   width:'90vw',
   height:'80vh'
@@ -32,7 +32,7 @@ class App extends Component {
     var intervalId2 = setInterval((this.checkAlert),  10000); // 10 seconds
   }
 
-  fetchPhotos() {
+  fetchPhotos() {  //call api from drupal to get slides, stores in photos
     request
         .get(this.server_name + 'm1')
         .then((res) => {
@@ -41,7 +41,7 @@ class App extends Component {
     })
   })
   }
-  checkAlert() {
+  checkAlert() {  //checks libservices for alert json string to see if active
     request
         .get('http://libservices.viterbo.edu/al/alerts/site.php')
         .then((res) => {
@@ -69,7 +69,7 @@ class App extends Component {
 
   render() {
     const isAlert = this.isAlert;
-    const sound = isAlert ? (
+    const sound = isAlert ? ( //if alert play sound
     <Sound
         url="/alarm.wav"
     playStatus={Sound.status.PLAYING}
@@ -81,7 +81,7 @@ class App extends Component {
   ) : (
     <nosound/>
   );
-    var speed=11000;
+    var speed=11000; //set speed based on variable hardcoded now
     if (this.state.photos.length>0){
       speed=this.state.photos[0].Speed;
     }
@@ -106,7 +106,7 @@ class App extends Component {
         <div className="outer">
         {sound}
         <Slider {...settings}>
-    {this.state.photos.map((photo, key) => {
+    {this.state.photos.map((photo, key) => { //loop through photos to output each photo inside slider widget
       return (
     <div key={photo.nid} className="slide-outer">
         {console.log(photo)}
