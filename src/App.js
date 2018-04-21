@@ -120,7 +120,7 @@ class App extends Component {
                 <p></p>
                 <p>{photo.body}</p>
                 </div>
-              ) : (
+              ) : (//image type
                 <div>
                 <img alt="banner" className="scroll-img" style={fillimg} src= {this.server_name + photo.field_banner_image}/>
                 </div>
