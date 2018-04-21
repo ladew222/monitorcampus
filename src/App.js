@@ -111,24 +111,20 @@ class App extends Component {
               <div key={photo.nid} className="slide-outer">
                   {console.log(photo)}
               <div className="slide-container">
-              {photo.Type === 'Event' ? (
-              <div>
-              <h1 >{photo.title}</h1>
-              <img alt="banner" className="scroll-img" src= {this.server_name + photo.field_event_image}/>
-              <h4>{photo.field_event_dates}</h4>
-              <h4>{photo.field_location_name}</h4>
-              <p></p>
-              <p>{photo.body}</p>
-              </div>
-
+              {photo.Type === 'Event' ? ( //differnt content depending on type
+                <div>
+                <h1 >{photo.title}</h1>
+                <img alt="banner" className="scroll-img" src= {this.server_name + photo.field_event_image}/>
+                <h4>{photo.field_event_dates}</h4>
+                <h4>{photo.field_location_name}</h4>
+                <p></p>
+                <p>{photo.body}</p>
+                </div>
               ) : (
-              <div>
-              <img alt="banner" className="scroll-img" style={fillimg} src= {this.server_name + photo.field_banner_image}/>
-              </div>
+                <div>
+                <img alt="banner" className="scroll-img" style={fillimg} src= {this.server_name + photo.field_banner_image}/>
+                </div>
               )}
-
-
-
               </div>
               </div>
               )
