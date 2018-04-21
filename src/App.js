@@ -108,7 +108,7 @@ class App extends Component {
         <Slider {...settings}>
     {this.state.photos.map((photo, key) => {
       return (
-    <div key={photo.nid} className="yabba">
+    <div key={photo.nid} className="slide-outer">
         {console.log(photo)}
     <div className="slide-container">
     {photo.Type === 'Event' ? (

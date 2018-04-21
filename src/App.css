@@ -46,3 +46,6 @@
   margin-left: 5%;
 
 }
+.slide-outer{
+  display: table;
+}
