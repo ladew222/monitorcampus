@@ -83,10 +83,10 @@ class App extends Component {
   ) : (
     <nosound/>
   );
-    var speed=11000; //set speed based on variable hardcoded now
-    if (this.state.photos.length>0){
+   // var speed=11000; //set speed based on variable hardcoded now
+   /* if (this.state.photos.length>0){
       speed=this.state.photos[0].Speed;
-    }
+    }*/
     var settings = {
       dots: false,
       infinite: true,
@@ -112,7 +112,7 @@ class App extends Component {
               <div key={photo.nid} className="slide-outer">
               {console.log(photo)}
               <div className="slide-container">
-              {photo.Type === 'Event' ? ( //differnt content depending on type
+              {photo.type === 'Event' ? ( //differnt content depending on type
                 <div className="inner-slide event">
                 <h1 >{photo.title}</h1>
                 <img alt="banner" className="scroll-img" src= {this.server_name + photo.field_event_image}/>
