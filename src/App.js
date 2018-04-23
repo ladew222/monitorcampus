@@ -33,8 +33,10 @@ class App extends Component {
   }
 
   fetchPhotos() {  //call api from drupal to get slides, stores in photos
+    var randomstring = require("randomstring");
+    randomstring.generate(7);
     request
-        .get(this.server_name + 'm1')
+        .get(this.server_name + 'm1?'+ randomstring.generate(4))
         .then((res) => {
       this.setState({
       photos: res.body
@@ -121,7 +123,7 @@ class App extends Component {
                 </div>
               ) : (//image type
                 <div className="inner-slide photo">
-                <img alt="banner" className="scroll-img" style={fillimg} src= {this.server_name + photo.field_banner_image}/>
+                <img alt="banner" className="scroll-img" style={fillimg} src= {this.server_name + photo.field_scroller_image}/>
                 </div>
               )}
               </div>
