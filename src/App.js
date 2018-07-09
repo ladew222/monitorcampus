@@ -19,7 +19,7 @@ class App extends Component {
     }
 
     //http://viterbouniveristyd8dev.prod.acquia-sites.com/
-    this.server_name="http://viterbouniveristyd8dev.prod.acquia-sites.com/";
+    this.server_name="http://www4.viterbo.edu/";
 
     this.fetchPhotos = this.fetchPhotos.bind(this)  //needed for reference below
     this.checkAlert = this.checkAlert.bind(this)  //needed for reference below
@@ -36,7 +36,7 @@ class App extends Component {
     var randomstring = require("randomstring");
     randomstring.generate(7);
     request
-        .get(this.server_name + 'm1?'+ randomstring.generate(4))
+        .get(this.server_name + 'murphyarc?'+ randomstring.generate(4))
         .then((res) => {
       this.setState({
       photos: res.body
@@ -94,7 +94,7 @@ class App extends Component {
       slidesToScroll: 1,
       autoplay: true,
       speed: 1000,
-      autoplaySpeed: 5000,
+      autoplaySpeed: 12000,
       cssEase: "linear",
       arrows: false,
     };
@@ -116,7 +116,7 @@ class App extends Component {
                 <div className="inner-slide event">
                 <h1 >{photo.title}</h1>
                 <img alt="banner" className="scroll-img" src= {this.server_name + photo.field_event_image}/>
-                <h4>{photo.field_event_dates}</h4>
+                <h4>{photo.field_event_date}</h4>
                 <h4>{photo.field_location_name}</h4>
                 <p></p>
                 <p>{photo.body}</p>
