@@ -4,6 +4,7 @@ import logo from './logo-red.svg';
 import './App.css';
 import Slider from "react-slick";  //slider library loaded via npm
 import Sound from 'react-sound';  //sound library loaded via npm
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 //centering inline css for slide
 let fillimg = {
@@ -17,10 +18,11 @@ class App extends Component {
     this.state = {
       photos: []
     }
-
     //http://viterbouniveristyd8dev.prod.acquia-sites.com/
     this.server_name="http://www4.viterbo.edu/";
-
+    var urlParams = new URLSearchParams(window.location.search);
+    this.monitor = urlParams.get('monitor');
+    console.log(this.monitor); // ["name"]
     this.fetchPhotos = this.fetchPhotos.bind(this)  //needed for reference below
     this.checkAlert = this.checkAlert.bind(this)  //needed for reference below
     this.isAlert=false;
@@ -36,7 +38,7 @@ class App extends Component {
     var randomstring = require("randomstring");
     randomstring.generate(7);
     request
-        .get(this.server_name + 'murphyarc?'+ randomstring.generate(4))
+        .get(this.server_name + this.monitor +'?'+ randomstring.generate(4))
         .then((res) => {
       this.setState({
       photos: res.body
@@ -51,7 +53,8 @@ class App extends Component {
       if (rslts.status === true){ ///las
       console.log('alert');
       this.isAlert=true;
-      var alert ={title: "alert",body: "testing 123 asdfasdfasdfasdfasdf asddfasdfasfdsa", nid:"001",field_event_image:"attention-clipart.jpg",field_location_name:"Notice"};
+      var msg = rslts.message;
+      var alert ={title: "alert",body: msg, nid:"001",field_event_image:"attention-clipart.jpg",field_location_name:"Notice"};
       //var newPlayer = Object.assign({}, player, {score: 2});
       this.server_name="/";
       var newArray= [];
@@ -94,6 +97,7 @@ class App extends Component {
       slidesToScroll: 1,
       autoplay: true,
       speed: 1000,
+      fade: true,
       autoplaySpeed: 12000,
       cssEase: "linear",
       arrows: false,
