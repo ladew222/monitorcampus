@@ -1,20 +1,16 @@
 .App {
   text-align: center;
   background: #1f2f5f;
+  height:100vh;
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 60px;
-  float:left;
-  padding-left: 70px;
-  padding-top: 20px;
+  height: 8vh;
 }
 
 .App-header {
   background-color: #1f2f5f;
-  height: 80px;
-  padding: 20px;
+  height: 10vh;
   color: white
 }
 
@@ -55,5 +51,4 @@
 }
 .slide-container{
   display: table;
-  height: 800px;
 }

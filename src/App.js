@@ -19,7 +19,7 @@ class App extends Component {
       photos: []
     }
     //http://viterbouniveristyd8dev.prod.acquia-sites.com/
-    this.server_name="http://www4.viterbo.edu/";
+    this.server_name="https://www4.viterbo.edu/";
     var urlParams = new URLSearchParams(window.location.search);
     this.monitor = urlParams.get('monitor');
     console.log(this.monitor); // ["name"]
@@ -28,7 +28,7 @@ class App extends Component {
     this.isAlert=false;
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.fetchPhotos();
     var intervalId = setInterval((this.fetchPhotos), 180000); // 3 minutes in milliseconds
     var intervalId2 = setInterval((this.checkAlert),  10000); // 10 seconds
@@ -102,13 +102,16 @@ class App extends Component {
       cssEase: "linear",
       arrows: false,
     };
+    var outerClass = 'outer' + ' '  + this.monitor;
+
+
     return ( //here is the content
 
         <div className="App">
         <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         </header>
-        <div className="outer">
+        <div className={outerClass}>
         {sound}
         <Slider {...settings}>
           {this.state.photos.map((photo, key) => { //loop through photos to output each photo inside slider widget
@@ -120,14 +123,14 @@ class App extends Component {
                 <div className="inner-slide event">
                 <h1 >{photo.title}</h1>
                 <img alt="banner" className="scroll-img" src= {this.server_name + photo.field_event_image}/>
-                <h4>{photo.field_event_date}</h4>
-                <h4>{photo.field_location_name}</h4>
+                <h2>{photo.field_event_date}</h2>
+                <h2>{photo.field_location_name}</h2>
                 <p></p>
                 <p>{photo.body}</p>
                 </div>
               ) : (//image type
                 <div className="inner-slide photo">
-                <img alt="banner" className="scroll-img" style={fillimg} src= {this.server_name + photo.field_scroller_image}/>
+                <img className="scroll-img" style={fillimg} src= {this.server_name + photo.field_scroller_image}/>
                 </div>
               )}
               </div>
