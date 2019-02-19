@@ -18,6 +18,9 @@
   font-size: 1.5em;
   float: left;
 }
+.evt-img{
+  max-width: 480px;
+}
 
 .App-intro {
   font-size: large;
@@ -51,4 +54,6 @@
 }
 .slide-container{
   display: table;
+  text-align: center;
+  margin: auto;
 }

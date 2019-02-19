@@ -122,11 +122,10 @@ class App extends Component {
               {photo.type === 'Event' ? ( //differnt content depending on type
                 <div className="inner-slide event">
                 <h1 >{photo.title}</h1>
-                <img alt="banner" className="scroll-img" src= {this.server_name + photo.field_event_image}/>
-                <h2>{photo.field_event_date}</h2>
-                <h2>{photo.field_location_name}</h2>
+                <img className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
+                <h2><i className="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{photo.field_event_date}</h2>
+                <h2><i className="fa fa-location-arrow" aria-hidden="true"></i>&nbsp;{photo.field_location_name}</h2>
                 <p></p>
-                <p>{photo.body}</p>
                 </div>
               ) : (//image type
                 <div className="inner-slide photo">
