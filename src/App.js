@@ -22,6 +22,7 @@ class App extends Component {
     this.server_name="https://www4.viterbo.edu/";
     var urlParams = new URLSearchParams(window.location.search);
     this.monitor = urlParams.get('monitor');
+    this.padtop = urlParams.get('pad');
     console.log(this.monitor); // ["name"]
     this.fetchPhotos = this.fetchPhotos.bind(this)  //needed for reference below
     this.checkAlert = this.checkAlert.bind(this)  //needed for reference below
@@ -73,6 +74,7 @@ class App extends Component {
   }
 
   render() {
+    const tpad = this.padtop;
     const isAlert = this.isAlert;
     const sound = isAlert ? ( //if alert play sound
     <Sound
@@ -108,7 +110,7 @@ class App extends Component {
     return ( //here is the content
 
         <div className="App">
-        <header className="App-header">
+        <header className="App-header"  style={{ padding: tpad+"px"}}>
         <img src={logo} className="App-logo" alt="logo" />
         </header>
         <div className={outerClass}>
