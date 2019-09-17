@@ -13,6 +13,45 @@ let fillimg = {
   height:'80vh'
 }
 
+const options = {
+    timeZone:"Canada/Central",
+    hour12 : true,
+    hour:  "numeric",
+    minute: "numeric",seconds:"numeric"
+}
+
+class Clock extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {date: new Date()};
+    }
+
+    componentDidMount() {
+        this.timerID = setInterval(
+            () => this.tick(),
+            1000
+        );
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timerID);
+    }
+
+    tick() {
+        this.setState({
+            date: new Date()
+        });
+    }
+
+    render() {
+        return (
+            <div id="clk">
+                <h2>{this.state.date.toLocaleTimeString("en-US",options)}</h2>
+            </div>
+        );
+    }
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -27,8 +66,9 @@ class App extends Component {
     console.log(this.monitor); // ["name"]
     this.fetchPhotos = this.fetchPhotos.bind(this)  //needed for reference below
     this.checkAlert = this.checkAlert.bind(this)  //needed for reference below
-    this.reportStatus = this.reportStatus.bind(this)  //needed for reference below
-    this.isAlert=false;
+      // this.reportStatus = this.reportStatus.bind(this)  //needed for reference below
+    this.isAlert = false;
+    this.slide_num = 0;
   }
 
   componentDidMount() {
@@ -52,9 +92,9 @@ class App extends Component {
   reportStatus() {  //call api from drupal to get slides, stores in photos
     var url = new URL(window.location.href);
     var monitor = url.searchParams.get("monitor");
-    var curr = $('.slick-track').children('.slick-slide').css('opacity','1');
+  ///  var curr = $('.slick-track').children('.slick-slide').css('opacity','1');
     request
-        .get('http://libservices.viterbo.edu/al/alerts/reportstatus.php?monitor='+ monitor)
+        .get('http://libservices.viterbo.edu/al/alerts/reportstatus.php?monitor='+ monitor+"&status="+this.isAlert+"&slide="+this.slide_num)
         .then((res) => {
           console.log('res');
         })
@@ -95,7 +135,7 @@ class App extends Component {
     const isAlert = this.isAlert;
     const sound = isAlert ? ( //if alert play sound
     <Sound
-        url="/alarm.wav"
+        url="alarm.wav"
     playStatus={Sound.status.PLAYING}
     playFromPosition={0 /* in milliseconds */}
     onLoading={this.handleSongLoading}
@@ -120,6 +160,10 @@ class App extends Component {
       autoplaySpeed: 12000,
       cssEase: "linear",
       arrows: false,
+      afterChange: function(currentSlide) {
+            console.log("after change", currentSlide);
+            var slide_num=currentSlide;
+        }
     };
     var outerClass = 'outer' + ' '  + this.monitor;
 
@@ -129,6 +173,7 @@ class App extends Component {
         <div className="App">
         <header className="App-header"  style={{ padding: tpad+"px"}}>
         <img src={logo} className="App-logo" alt="logo" />
+        <Clock />
         </header>
         <div className={outerClass}>
         {sound}
