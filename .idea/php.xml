@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Behat">
+    <behat_settings>
+      <BehatSettings />
+    </behat_settings>
+  </component>
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/zendframework/zend-code" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/zendframework/zend-eventmanager" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/composer" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/doctrine/annotations" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/doctrine/collections" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/doctrine/common" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/doctrine/data-fixtures" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/doctrine/doctrine-bundle" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/doctrine/doctrine-cache-bundle" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/doctrine/doctrine-migrations-bundle" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/doctrine/migrations" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/doctrine/orm" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/symfony/symfony" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/fzaninotto/faker" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/incenteev/composer-parameter-handler" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/jdorn/sql-formatter" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/knplabs/knp-markdown-bundle" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/michelf/php-markdown" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/nelmio/alice" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/ocramius/proxy-manager" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/sensio/distribution-bundle" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/sensio/framework-extra-bundle" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/sensio/generator-bundle" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/sensiolabs/security-checker" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/swiftmailer/swiftmailer" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/symfony/monolog-bundle" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/symfony/phpunit-bridge" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/symfony/polyfill-apcu" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/symfony/polyfill-intl-icu" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/symfony/polyfill-php56" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/symfony/polyfill-php70" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/symfony/polyfill-util" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/symfony/swiftmailer-bundle" />
+      <path value="$PROJECT_DIR$/../Documents/cwsym/vendor/twig/twig" />
+    </include_path>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="5.5.0" />
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings load_method="CUSTOM_LOADER" />
+    </phpunit_settings>
+  </component>
+</project>

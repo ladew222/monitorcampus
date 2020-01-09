@@ -59,9 +59,11 @@ class App extends Component {
       photos: []
     }
     //http://viterbouniveristyd8dev.prod.acquia-sites.com/
-    this.server_name="https://www4.viterbo.edu/";
+    this.server_name="https://www.viterbo.edu/";
+    this.video_feed ="http://vuwebcam.viterbo.edu/mjpg/video.mjpg"
     var urlParams = new URLSearchParams(window.location.search);
     this.monitor = urlParams.get('monitor');
+    this.vid = urlParams.get('video');
     this.padtop = urlParams.get('pad');
     console.log(this.monitor); // ["name"]
     this.fetchPhotos = this.fetchPhotos.bind(this)  //needed for reference below
@@ -105,34 +107,45 @@ class App extends Component {
           .then((res) => {
         var rslts = JSON.parse(res.text)
         if (rslts.status === true){ ///las
-        console.log('alert');
-        this.isAlert=true;
-        var msg = rslts.message;
-        this.server_name="http://libservices.viterbo.edu/al/alerts/";
-        var alert ={title: "alert",body: msg, nid:"001",field_event_image:"attention-clipart.jpg",field_location_name:"Notice",type:"Alert"};
-        //var newPlayer = Object.assign({}, player, {score: 2});
-        var newArray= [];
-        newArray.push(alert);
-        this.setState({
-          photos: newArray
+            console.log('alert');
+            this.isAlert=true;
+            this.isVideo=false;
+            var msg = rslts.message;
+            this.server_name="http://libservices.viterbo.edu/al/alerts/";
+            var alert ={title: "alert",body: msg, nid:"001",field_event_image:"attention-clipart.jpg",field_location_name:"Notice",type:"Alert"};
+            //var newPlayer = Object.assign({}, player, {score: 2});
+            var newArray= [];
+            newArray.push(alert);
+            this.setState({
+              photos: newArray
+            })
+        }
+        else{
+            this.isAlert=false;
+            console.log('video_st',rslts.video)
+            if (this.vid=="1" && rslts.video==true){
+                this.isVideo = true;
+                console.log('video')
+                this.forceUpdate();
+            }
+            else{
+                this.isVideo = false;
+            }
+            if(this.isAlert==true){
+              this.isAlert=false;
+              console.log('no alert');
+              window.location.reload();
+            }
+              this.isAlert=false;
+              console.log('no alert');
+            }
         })
-      }
-    else{
-        this.isAlert=false;
-        if(this.isAlert==true){
-          this.isAlert=false;
-          console.log('no alert');
-          window.location.reload();
-        }
-          this.isAlert=false;
-          console.log('no alert');
-        }
-    })
   }
 
   render() {
     const tpad = this.padtop;
     const isAlert = this.isAlert;
+    const isVideo = this.isVideo;
     const sound = isAlert ? ( //if alert play sound
     <Sound
         url="alarm.wav"
@@ -166,10 +179,16 @@ class App extends Component {
         }
     };
     var outerClass = 'outer' + ' '  + this.monitor;
+      console.log("show vid", this.isVideo);
+      if (this.isVideo) {
+          return (
+              <div className="App">
+                  <img src= {this.video_feed} style={{width:"100%"}} />
+                  </div>
+      );
+      }
 
-
-    return ( //here is the content
-
+      return(
         <div className="App">
         <header className="App-header"  style={{ padding: tpad+"px"}}>
         <img src={logo} className="App-logo" alt="logo" />
@@ -185,10 +204,12 @@ class App extends Component {
                   <div className="slide-container">
                     {photo.type === 'Event' ? ( //differnt content depending on type
                         <div className="inner-slide event">
+                            <br/>
                           <h1 >{photo.title}</h1>
                           <img className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
                           <h2><i className="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{photo.field_event_date}</h2>
                           <h2><i className="fa fa-location-arrow" aria-hidden="true"></i>&nbsp;{photo.field_location_name}</h2>
+                            <br/>
                           <p>{photo.body}</p>
                         </div>
                     ):photo.type === 'Scrolling Image' ?(//image type
