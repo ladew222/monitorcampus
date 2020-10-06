@@ -64,8 +64,10 @@ class App extends Component {
     var urlParams = new URLSearchParams(window.location.search);
     this.monitor = urlParams.get('monitor');
     this.vid = urlParams.get('video');
+    this.exit = urlParams.get('exit');
+    this.exit_img = "https://monitors.viterbo.edu/"+ this.exit +".jpg"
     this.padtop = urlParams.get('pad');
-    console.log(this.monitor); // ["name"]
+   // console.log(this.monitor); // ["name"]
     this.fetchPhotos = this.fetchPhotos.bind(this)  //needed for reference below
     this.checkAlert = this.checkAlert.bind(this)  //needed for reference below
       // this.reportStatus = this.reportStatus.bind(this)  //needed for reference below
@@ -92,26 +94,31 @@ class App extends Component {
   })
   }
   reportStatus() {  //call api from drupal to get slides, stores in photos
-    var url = new URL(window.location.href);
-    var monitor = url.searchParams.get("monitor");
-  ///  var curr = $('.slick-track').children('.slick-slide').css('opacity','1');
-    request
-        .get('http://libservices.viterbo.edu/al/alerts/reportstatus.php?monitor='+ monitor+"&status="+this.isAlert+"&slide="+this.slide_num)
-        .then((res) => {
-          console.log('res');
-        })
+      var url = new URL(window.location.href);
+      var monitor = url.searchParams.get("monitor");
+      var report = url.searchParams.get("report");
+
+  if ("1" == "1") {
+      ///  var curr = $('.slick-track').children('.slick-slide').css('opacity','1');
+      request
+          .get('https://monitors.viterbo.edu/alerts/reportstatus.php?monitor=' + monitor + "&status=" + 0 + "&slide=" + 1)
+          .then((res) => {
+             // console.log('res');
+          })
+      }
   }
   checkAlert() {  //checks libservices for alert json string to see if active
     request
-          .get('http://libservices.viterbo.edu/al/alerts/site.php')
+          .get('https://monitors.viterbo.edu/alerts/site.php')
           .then((res) => {
         var rslts = JSON.parse(res.text)
         if (rslts.status === true){ ///las
-            console.log('alert');
+           // console.log('alert');
             this.isAlert=true;
             this.isVideo=false;
+            this.isExit=false;
             var msg = rslts.message;
-            this.server_name="http://libservices.viterbo.edu/al/alerts/";
+            this.server_name="https://monitors.viterbo.edu/alerts/";
             var alert ={title: "alert",body: msg, nid:"001",field_event_image:"attention-clipart.jpg",field_location_name:"Notice",type:"Alert"};
             //var newPlayer = Object.assign({}, player, {score: 2});
             var newArray= [];
@@ -122,10 +129,17 @@ class App extends Component {
         }
         else{
             this.isAlert=false;
-            console.log('video_st',rslts.video)
+            this.isVideo = false;
+            this.isExit = false;
+          //  console.log('video_st',rslts.video)
             if (this.vid=="1" && rslts.video==true){
                 this.isVideo = true;
-                console.log('video')
+               // console.log('video')
+                this.forceUpdate();
+            }
+            else if(this.exit && this.exit.length>0 && rslts.exit==true){
+                this.isExit= true;
+               // console.log('exit')
                 this.forceUpdate();
             }
             else{
@@ -133,11 +147,11 @@ class App extends Component {
             }
             if(this.isAlert==true){
               this.isAlert=false;
-              console.log('no alert');
+             // console.log('no alert');
               window.location.reload();
             }
               this.isAlert=false;
-              console.log('no alert');
+             // console.log('no alert');
             }
         })
   }
@@ -146,6 +160,7 @@ class App extends Component {
     const tpad = this.padtop;
     const isAlert = this.isAlert;
     const isVideo = this.isVideo;
+    const isExit = this.isExit;
     const sound = isAlert ? ( //if alert play sound
     <Sound
         url="alarm.wav"
@@ -174,18 +189,29 @@ class App extends Component {
       cssEase: "linear",
       arrows: false,
       afterChange: function(currentSlide) {
-            console.log("after change", currentSlide);
+           // console.log("after change", currentSlide);
             var slide_num=currentSlide;
         }
     };
     var outerClass = 'outer' + ' '  + this.monitor;
-      console.log("show vid", this.isVideo);
+     // console.log("show vid", this.isVideo);
       if (this.isVideo) {
           return (
               <div className="App">
-                  <img src= {this.video_feed} style={{width:"100%"}} />
-                  </div>
+                  <video className="vid" loop autoPlay muted >
+                    <source src="https://webforms.exchange.viterbo.edu/videos/reslife.mp4" type="video/mp4"/>
+                  </video>
+              </div>
       );
+
+      }
+      if (this.isExit) {
+          return (
+              <div className="App">
+                  <img src= {this.exit_img } style={{height:"100%"}} />
+              </div>
+          );
+
       }
 
       return(
@@ -200,7 +226,7 @@ class App extends Component {
           {this.state.photos.map((photo, key) => { //loop through photos to output each photo inside slider widget
             return (
                 <div key={photo.nid} className="slide-outer">
-                  {console.log(photo)}
+
                   <div className="slide-container">
                     {photo.type === 'Event' ? ( //differnt content depending on type
                         <div className="inner-slide event">
