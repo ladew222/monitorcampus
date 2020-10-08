@@ -67,7 +67,6 @@ class App extends Component {
     this.exit = urlParams.get('exit');
     this.exit_img = "https://monitors.viterbo.edu/"+ this.exit +".jpg"
     this.padtop = urlParams.get('pad');
-   // console.log(this.monitor); // ["name"]
     this.fetchPhotos = this.fetchPhotos.bind(this)  //needed for reference below
     this.checkAlert = this.checkAlert.bind(this)  //needed for reference below
       // this.reportStatus = this.reportStatus.bind(this)  //needed for reference below
@@ -88,30 +87,29 @@ class App extends Component {
     request
         .get(this.server_name + this.monitor +'?'+ randomstring.generate(4))
         .then((res) => {
-          this.setState({
-          photos: res.body
+              this.setState({
+              photos: res.body
+            })
         })
-       .catch(err => {
-           this.setState({
-               photos: ''
-           })
-       });
-
-  })
+        .catch(err => {
+            // err.message, err.response
+        });
   }
   reportStatus() {  //call api from drupal to get slides, stores in photos
       var url = new URL(window.location.href);
       var monitor = url.searchParams.get("monitor");
       var report = url.searchParams.get("report");
+      if ("1" == "1") {
+          ///  var curr = $('.slick-track').children('.slick-slide').css('opacity','1');
+          request
+              .get('https://monitors.viterbo.edu/alerts/reportstatus.php?monitor=' + monitor + "&status=" + 0 + "&slide=" + 1)
+              .then((res) => {
 
-  if ("1" == "1") {
-      ///  var curr = $('.slick-track').children('.slick-slide').css('opacity','1');
-      request
-          .get('https://monitors.viterbo.edu/alerts/reportstatus.php?monitor=' + monitor + "&status=" + 0 + "&slide=" + 1)
-          .then((res) => {
-             // console.log('res');
-          })
-      }
+              })
+              .catch(err => {
+                  // err.message, err.response
+              });
+          }
   }
   checkAlert() {  //checks libservices for alert json string to see if active
     request
@@ -119,7 +117,6 @@ class App extends Component {
           .then((res) => {
         var rslts = JSON.parse(res.text)
         if (rslts.status === true){ ///las
-           // console.log('alert');
             this.isAlert=true;
             this.isVideo=false;
             this.isExit=false;
@@ -137,15 +134,12 @@ class App extends Component {
             this.isAlert=false;
             this.isVideo = false;
             this.isExit = false;
-          //  console.log('video_st',rslts.video)
             if (this.vid=="1" && rslts.video==true){
                 this.isVideo = true;
-               // console.log('video')
                 this.forceUpdate();
             }
             else if(this.exit && this.exit.length>0 && rslts.exit==true){
                 this.isExit= true;
-               // console.log('exit')
                 this.forceUpdate();
             }
             else{
@@ -153,11 +147,9 @@ class App extends Component {
             }
             if(this.isAlert==true){
               this.isAlert=false;
-             // console.log('no alert');
               window.location.reload();
             }
               this.isAlert=false;
-             // console.log('no alert');
             }
         })
   }
@@ -195,12 +187,10 @@ class App extends Component {
       cssEase: "linear",
       arrows: false,
       afterChange: function(currentSlide) {
-           // console.log("after change", currentSlide);
             var slide_num=currentSlide;
         }
     };
     var outerClass = 'outer' + ' '  + this.monitor;
-     // console.log("show vid", this.isVideo);
       if (this.isVideo) {
           return (
               <div className="App">
