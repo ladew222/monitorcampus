@@ -88,9 +88,15 @@ class App extends Component {
     request
         .get(this.server_name + this.monitor +'?'+ randomstring.generate(4))
         .then((res) => {
-      this.setState({
-      photos: res.body
-    })
+          this.setState({
+          photos: res.body
+        })
+       .catch(err => {
+           this.setState({
+               photos: ''
+           })
+       });
+
   })
   }
   reportStatus() {  //call api from drupal to get slides, stores in photos
