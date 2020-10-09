@@ -224,7 +224,7 @@ class App extends Component {
                 <div key={photo.nid} className="slide-outer">
 
                   <div className="slide-container">
-                    {photo.type === 'Event' ? ( //differnt content depending on type
+                    {photo.type === 'Landscape' ? ( //differnt content depending on type
                         <div className="inner-slide event">
                             <br/>
                           <h1 >{photo.title}</h1>
@@ -233,6 +233,25 @@ class App extends Component {
                           <h2><i className="fa fa-location-arrow" aria-hidden="true"></i>&nbsp;{photo.field_location_name}</h2>
                             <br/>
                           <p>{photo.body}</p>
+                        </div>
+                    ):photo.type === 'Portrait' ? ( //differnt content depending on type
+                        <div className="container-fluid">
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <h1 >{photo.title}</h1>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-md-8">
+                                    <h2><i className="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{photo.field_event_date}</h2>
+                                    <h2><i className="fa fa-location-arrow" aria-hidden="true"></i>&nbsp;{photo.field_location_name}</h2>
+                                    <br/>
+                                    <p>{photo.body}</p>
+                                </div>
+                                <div className="col-md-4">
+                                    <img className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
+                                </div>
+                            </div>
                         </div>
                     ):photo.type === 'Scrolling Image' ?(//image type
                         <div className="inner-slide photo">
