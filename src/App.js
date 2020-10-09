@@ -222,9 +222,8 @@ class App extends Component {
           {this.state.photos.map((photo, key) => { //loop through photos to output each photo inside slider widget
             return (
                 <div key={photo.nid} className="slide-outer">
-
-                  <div className="slide-container">
                     {photo.type === 'Landscape' ? ( //differnt content depending on type
+                     <div className="slide-container">
                         <div className="inner-slide event">
                             <br/>
                           <h1 >{photo.title}</h1>
@@ -234,8 +233,10 @@ class App extends Component {
                             <br/>
                           <p>{photo.body}</p>
                         </div>
+                     </div>
                     ):photo.type === 'Portrait' ? ( //differnt content depending on type
-                        <div className="container-fluid port">
+                     <div className="slide-container stripe-1">
+                         <div className="container-fluid">
                             <div className="row">
                                 <div className="col-md-12">
                                 </div>
@@ -255,18 +256,22 @@ class App extends Component {
                                 </div>
                             </div>
                         </div>
+                     </div>
                     ):photo.type === 'Scrolling Image' ?(//image type
-                        <div className="inner-slide photo">
-                          <img className="scroll-img" style={fillimg} src= {this.server_name + photo.field_scroller_image}/>
-                        </div>
+                         <div className="slide-container">
+                            <div className="inner-slide photo">
+                              <img className="scroll-img" style={fillimg} src= {this.server_name + photo.field_scroller_image}/>
+                            </div>
+                         </div>
                     ): (// alert
-                        <div className="inner-slide event">
-                          <h1 >{photo.title}</h1>
-                          <img className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
-                          <h2>{photo.body}</h2>
+                        <div className="slide-container">
+                            <div className="inner-slide event">
+                                  <h1 >{photo.title}</h1>
+                                  <img className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
+                                  <h2>{photo.body}</h2>
+                             </div>
                         </div>
                     )}
-                  </div>
                 </div>
             )
           })}
