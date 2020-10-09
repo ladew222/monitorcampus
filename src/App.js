@@ -235,18 +235,20 @@ class App extends Component {
                           <p>{photo.body}</p>
                         </div>
                     ):photo.type === 'Portrait' ? ( //differnt content depending on type
-                        <div className="container-fluid">
+                        <div className="container-fluid port">
                             <div className="row">
                                 <div className="col-md-12">
-                                    <h1 >{photo.title}</h1>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="col-md-8">
-                                    <h2><i className="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{photo.field_event_date}</h2>
-                                    <h2><i className="fa fa-location-arrow" aria-hidden="true"></i>&nbsp;{photo.field_location_name}</h2>
+                                    <div className="slide-title">
+                                    <h1 >{photo.title}</h1>
+                                    </div>
+                                    <h2 className="date">{photo.field_event_date}</h2>
+                                    <h2>{photo.field_location_name}</h2>
                                     <br/>
-                                    <p>{photo.body}</p>
+                                    <p className="body-text">{photo.body}</p>
                                 </div>
                                 <div className="col-md-4">
                                     <img className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
