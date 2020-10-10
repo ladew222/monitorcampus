@@ -226,7 +226,7 @@ class App extends Component {
                      <div className="slide-container">
                         <div className="inner-slide event">
                             <br/>
-                          <h1 >{photo.title}</h1>
+                          <span >{photo.title}</span>
                           <img className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
                           <h2><i className="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{photo.field_event_date}</h2>
                           <h2><i className="fa fa-location-arrow" aria-hidden="true"></i>&nbsp;{photo.field_location_name}</h2>
@@ -244,7 +244,7 @@ class App extends Component {
                             <div className="row">
                                 <div className="col-md-8">
                                     <div className="slide-title">
-                                    <h1 >{photo.title}</h1>
+                                        <span >{photo.title}</span>
                                     </div>
                                     <h2 className="date">{photo.field_event_date}</h2>
                                     <h2>{photo.field_location_name}</h2>

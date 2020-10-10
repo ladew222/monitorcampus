@@ -25,7 +25,8 @@
 }
 .evt-img{
   max-width: 480px;
-  max-width: 100%;
+  margin-top: 24px;
+  box-shadow: 10px 10px #a71d36;
 }
 
 .App-intro {
@@ -69,10 +70,37 @@
   color: white;
   background: repeating-linear-gradient(
           45deg,
-          #606dbc,
-          #606dbc 10px,
-          #465298 10px,
-          #465298 20px
+          #95cfdc,
+          #95cfdc 25px,
+          #79c5d2 25px,
+          #79c5d2 50px
   );
+  min-height: 600px;
+  min-width: 1500px;
 }
+
+div.slide-title {
+  font-family:"Source Sans Pro";
+  position: relative;
+  display: inline-block;
+  padding-top: 20px;
+  overflow: hidden;
+  color: #ffffff;
+  font-size: 3.5em;
+  font-weight: bolder;
+
+}
+
+.date{
+  padding-top: 24px;
+  font-weight: bold;
+  font-color:#ffffff;
+}
+
+.body-text{
+  font-size: 24px;
+  color: #1f2f5f;
+  font-weight: bold;
+}
+
 
