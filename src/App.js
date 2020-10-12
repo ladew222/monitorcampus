@@ -226,16 +226,41 @@ class App extends Component {
                      <div className="slide-container">
                         <div className="inner-slide event">
                             <br/>
-                          <span >{photo.title}</span>
+                          <div className="slide-title">{photo.title}</div>
                           <img className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
-                          <h2><i className="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{photo.field_event_date}</h2>
-                          <h2><i className="fa fa-location-arrow" aria-hidden="true"></i>&nbsp;{photo.field_location_name}</h2>
+                          <h2>{photo.field_event_date}</h2>
+                          <h2>{photo.field_location_name}</h2>
                             <br/>
                           <p>{photo.body}</p>
                         </div>
                      </div>
+                    ):photo.type === 'Landscape1' ? ( //differnt content depending on type
+                        <div className="slide-container land">
+                            <div className="container-fluid">
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <div className="row">
+                                            <div className="col-md-12">
+                                                <div className="slide-title">{photo.title}</div>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-8">
+                                                <img className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
+                                            </div>
+                                            <div className="col-md-4">
+                                                <br/>
+                                                <h2>{photo.field_event_date}</h2>
+                                                <hr/>
+                                                <h2>{photo.field_location_name}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     ):photo.type === 'Portrait' ? ( //differnt content depending on type
-                     <div className="slide-container stripe-1">
+                     <div className="slide-container stripe-1 port">
                          <div className="container-fluid">
                             <div className="row">
                                 <div className="col-md-12">
@@ -252,11 +277,63 @@ class App extends Component {
                                     <p className="body-text">{photo.body}</p>
                                 </div>
                                 <div className="col-md-4">
+                                    <br/>
+
                                     <img className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
                                 </div>
                             </div>
                         </div>
                      </div>
+                    ):photo.type === 'Portrait1' ? ( //differnt content depending on type
+                        <div className="slide-container port1">
+                            <div className="container-fluid">
+                                <div className="row">
+                                    <div className="col-md-12">
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-8">
+                                        <div className="slide-title">
+                                            <span >{photo.title}</span>
+                                        </div>
+                                        <h2 className="date">{photo.field_event_date}</h2>
+                                        <h2>{photo.field_location_name}</h2>
+                                        <br/>
+                                        <p className="body-text">{photo.body}</p>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <br/>
+
+                                        <img className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ):photo.type === 'Portrait2' ? ( //differnt content depending on type
+                        <div className="slide-container stripe-1 port">
+                            <div className="container-fluid">
+                                <div className="row">
+                                    <div className="col-md-12">
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-8">
+                                        <div className="slide-title">
+                                            <span >{photo.title}</span>
+                                        </div>
+                                        <h2 className="date">{photo.field_event_date}</h2>
+                                        <h2>{photo.field_location_name}</h2>
+                                        <br/>
+                                        <p className="body-text">{photo.body}</p>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <br/>
+
+                                        <img className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     ):photo.type === 'Scrolling Image' ?(//image type
                          <div className="slide-container">
                             <div className="inner-slide photo">
