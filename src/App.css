@@ -48,6 +48,16 @@
 .port1 .evt-img{
 }
 
+.land{
+  color: white;
+  background: #a51f39;
+  min-height: 700px;
+  min-width: 1500px;
+}
+.land .evt-img{
+  box-shadow: 12px 12px #1f2f5f;
+}
+
 .port1 .back {
   color: white;
   background: #a51f39;

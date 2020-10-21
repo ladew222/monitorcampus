@@ -4,8 +4,8 @@ import logo from './logo-red.svg';
 import './App.css';
 import Slider from "react-slick";  //slider library loaded via npm
 import Sound from 'react-sound';  //sound library loaded via npm
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-import $ from 'jquery';
+//import { BrowserRouter as Router, Route } from 'react-router-dom'
+//import $ from 'jquery';
 
 //centering inline css for slide
 let fillimg = {
@@ -63,6 +63,7 @@ class App extends Component {
     this.video_feed ="http://vuwebcam.viterbo.edu/mjpg/video.mjpg"
     var urlParams = new URLSearchParams(window.location.search);
     this.monitor = urlParams.get('monitor');
+    //this.monitor='comm';
     this.vid = urlParams.get('video');
     this.exit = urlParams.get('exit');
     this.exit_img = "https://monitors.viterbo.edu/"+ this.exit +".jpg"
@@ -71,14 +72,15 @@ class App extends Component {
     this.checkAlert = this.checkAlert.bind(this)  //needed for reference below
       // this.reportStatus = this.reportStatus.bind(this)  //needed for reference below
     this.isAlert = false;
-    this.slide_num = 0;
+    //this.slide_num = 0;
   }
 
   componentDidMount() {
     this.fetchPhotos();
-    var intervalId = setInterval((this.fetchPhotos), 180000); // 3 minutes in milliseconds
-    var intervalId2 = setInterval((this.checkAlert),  8000); // 8 seconds
-    var intervalId3 = setInterval((this.reportStatus),  35000); // 25 seconds
+    this.reportStatus();
+    setInterval((this.fetchPhotos), 180000); // 3 minutes in milliseconds
+    setInterval((this.checkAlert),  8000); // 8 seconds\
+    setInterval((this.reportStatus),  95000); // 95 seconds
   }
 
   fetchPhotos() {  //call api from drupal to get slides, stores in photos
@@ -99,7 +101,7 @@ class App extends Component {
       var url = new URL(window.location.href);
       var monitor = url.searchParams.get("monitor");
       var report = url.searchParams.get("report");
-      if ("1" == "1") {
+      if ("1" === "1") {
           ///  var curr = $('.slick-track').children('.slick-slide').css('opacity','1');
           request
               .get('https://monitors.viterbo.edu/alerts/reportstatus.php?monitor=' + monitor + "&status=" + 0 + "&slide=" + 1)
@@ -134,18 +136,18 @@ class App extends Component {
             this.isAlert=false;
             this.isVideo = false;
             this.isExit = false;
-            if (this.vid=="1" && rslts.video==true){
+            if (this.vid==="1" && rslts.video===true){
                 this.isVideo = true;
                 this.forceUpdate();
             }
-            else if(this.exit && this.exit.length>0 && rslts.exit==true){
+            else if(this.exit && this.exit.length>0 && rslts.exit===true){
                 this.isExit= true;
                 this.forceUpdate();
             }
             else{
                 this.isVideo = false;
             }
-            if(this.isAlert==true){
+            if(this.isAlert===true){
               this.isAlert=false;
               window.location.reload();
             }
@@ -187,8 +189,18 @@ class App extends Component {
       cssEase: "linear",
       arrows: false,
       afterChange: function(currentSlide) {
-            var slide_num=currentSlide;
-        }
+          var url = new URL(window.location.href);
+          var monitor = url.searchParams.get("monitor");
+          console.log('https://monitors.viterbo.edu/alerts/reportslide.php?monitor=' + monitor  + "&slide=" + currentSlide)
+          request
+              .get('https://monitors.viterbo.edu/alerts/reportslide.php?monitor=' + monitor  + "&slide=" + currentSlide)
+              .then((res) => {
+
+              })
+              .catch(err => {
+                  // err.message, err.response
+              });
+          }
     };
     var outerClass = 'outer' + ' '  + this.monitor;
       if (this.isVideo) {
@@ -204,7 +216,7 @@ class App extends Component {
       if (this.isExit) {
           return (
               <div className="App">
-                  <img src= {this.exit_img } style={{height:"100%"}} />
+                  <img alt='img' src= {this.exit_img } style={{height:"100%"}} />
               </div>
           );
 
@@ -222,19 +234,19 @@ class App extends Component {
           {this.state.photos.map((photo, key) => { //loop through photos to output each photo inside slider widget
             return (
                 <div key={photo.nid} className="slide-outer">
-                    {photo.type === 'Landscape' ? ( //differnt content depending on type
+                    {photo.type === 'Landscape Basic' ? ( //differnt content depending on type
                      <div className="slide-container">
                         <div className="inner-slide event">
                             <br/>
                           <div className="slide-title">{photo.title}</div>
-                          <img className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
+                          <img alt='img' className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
                           <h2>{photo.field_event_date}</h2>
                           <h2>{photo.field_location_name}</h2>
                             <br/>
                           <p>{photo.body}</p>
                         </div>
                      </div>
-                    ):photo.type === 'Landscape1' ? ( //differnt content depending on type
+                    ):photo.type === 'Landscape Red' ? ( //differnt content depending on type
                         <div className="slide-container land">
                             <div className="container-fluid">
                                 <div className="row">
@@ -246,7 +258,7 @@ class App extends Component {
                                         </div>
                                         <div className="row">
                                             <div className="col-md-8">
-                                                <img className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
+                                                <img alt='img' className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
                                             </div>
                                             <div className="col-md-4">
                                                 <br/>
@@ -259,7 +271,7 @@ class App extends Component {
                                 </div>
                             </div>
                         </div>
-                    ):photo.type === 'Portrait' ? ( //differnt content depending on type
+                    ):photo.type === 'Portrait Striped' ? ( //differnt content depending on type
                      <div className="slide-container stripe-1 port">
                          <div className="container-fluid">
                             <div className="row">
@@ -279,12 +291,12 @@ class App extends Component {
                                 <div className="col-md-4">
                                     <br/>
 
-                                    <img className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
+                                    <img alt='img' className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
                                 </div>
                             </div>
                         </div>
                      </div>
-                    ):photo.type === 'Portrait1' ? ( //differnt content depending on type
+                    ):photo.type === 'Portrait Basic' ? ( //differnt content depending on type
                         <div className="slide-container port1">
                             <div className="container-fluid">
                                 <div className="row">
@@ -304,12 +316,12 @@ class App extends Component {
                                     <div className="col-md-4">
                                         <br/>
 
-                                        <img className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
+                                        <img alt='img' className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    ):photo.type === 'Portrait2' ? ( //differnt content depending on type
+                    ):photo.type === 'Portrait Grey' ? ( //differnt content depending on type
                         <div className="slide-container stripe-1 port">
                             <div className="container-fluid">
                                 <div className="row">
@@ -329,7 +341,7 @@ class App extends Component {
                                     <div className="col-md-4">
                                         <br/>
 
-                                        <img className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
+                                        <img alt='img' className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
                                     </div>
                                 </div>
                             </div>
@@ -337,14 +349,14 @@ class App extends Component {
                     ):photo.type === 'Scrolling Image' ?(//image type
                          <div className="slide-container">
                             <div className="inner-slide photo">
-                              <img className="scroll-img" style={fillimg} src= {this.server_name + photo.field_scroller_image}/>
+                              <img alt='img' className="scroll-img" style={fillimg} src= {this.server_name + photo.field_scroller_image}/>
                             </div>
                          </div>
                     ): (// alert
                         <div className="slide-container">
                             <div className="inner-slide event">
                                   <h1 >{photo.title}</h1>
-                                  <img className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
+                                  <img alt='img' className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
                                   <h2>{photo.body}</h2>
                              </div>
                         </div>
