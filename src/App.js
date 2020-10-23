@@ -4,13 +4,7 @@ import request from 'superagent';
 import logo from './logo-red.svg';
 import './App.css';
 import SlideShow from './SlideShow';
-
-
-//centering inline css for slide
-let fillimg = {
-  width:'90vw',
-  height:'80vh'
-}
+import  Clock from './Clock'
 
 const options = {
     timeZone:"Canada/Central",
@@ -22,44 +16,17 @@ const options = {
 
 
 
-class Clock extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {date: new Date()};
-    }
 
-    componentDidMount() {
-        this.timerID = setInterval(
-            () => this.tick(),
-            1000
-        );
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.timerID);
-    }
-
-    tick() {
-        this.setState({
-            date: new Date()
-        });
-    }
-
-    render() {
-        return (
-            <div id="clk">
-                <h2>{this.state.date.toLocaleTimeString("en-US",options)}</h2>
-            </div>
-        );
-    }
-}
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      alert:'',
+      isAlert: false,
       isLoaded: false,
-      photos: []
+      photos: [],
+
     }
     //http://viterbouniveristyd8dev.prod.acquia-sites.com/
     this.server_name="https://www.viterbo.edu/";
@@ -67,14 +34,9 @@ class App extends Component {
     var urlParams = new URLSearchParams(window.location.search);
     this.monitor = urlParams.get('monitor');
     this.monitor='comm';
-    this.vid = urlParams.get('video');
-    this.exit = urlParams.get('exit');
-    this.exit_img = "https://monitors.viterbo.edu/"+ this.exit +".jpg"
-    this.padtop = urlParams.get('pad');
     this.fetchPhotos = this.fetchPhotos.bind(this)  //needed for reference below
     this.checkAlert = this.checkAlert.bind(this)  //needed for reference below
       // this.reportStatus = this.reportStatus.bind(this)  //needed for reference below
-    this.isAlert = false;
     //this.slide_num = 0;
   }
 
@@ -125,49 +87,43 @@ class App extends Component {
     request
           .get('https://monitors.viterbo.edu/alerts/site.php')
           .then((res) => {
-        var rslts = JSON.parse(res.text)
-        if (rslts.status === true){ ///las
-            this.isAlert=true;
-            this.isVideo=false;
-            this.isExit=false;
-            var msg = rslts.message;
-            this.server_name="https://monitors.viterbo.edu/alerts/";
-            var alert ={title: "alert",body: msg, nid:"001",field_event_image:"attention-clipart.jpg",field_location_name:"Notice",type:"Alert"};
-            //var newPlayer = Object.assign({}, player, {score: 2});
-            var newArray= [];
-            newArray.push(alert);
-            this.setState({
-              photos: newArray
-            })
-        }
-        else{
-            this.isAlert=false;
-            this.isVideo = false;
-            this.isExit = false;
-            if (this.vid==="1" && rslts.video===true){
-                this.isVideo = true;
-                this.forceUpdate();
-            }
-            else if(this.exit && this.exit.length>0 && rslts.exit===true){
-                this.isExit= true;
-                this.forceUpdate();
-            }
-            else{
-                this.isVideo = false;
-            }
-            if(this.isAlert===true){
-              this.isAlert=false;
-              window.location.reload();
-            }
-              this.isAlert=false;
-            }
-        })
+              var rslts = JSON.parse(res.text);
+              if (rslts.status === true) { ///las
+                  this.setState({
+                      isAlert: true,
+                      alert: rslts.message
+                  })
+              }
+              if ((rslts.status === false) && this.state.isAlert){
+                  this.setState({
+                      isAlert: false,
+                      alert: ''
+                  })
+              }
+          })
+          .catch(err => {
+            // err.message, err.response
+         });
+
+
   }
 
   render() {
     const tpad = this.padtop;
     const isAlert = this.isAlert;
     const { isLoaded, photos } = this.state;
+
+      if (this.isAlert) {
+          return (
+              <div className="slide-container">
+                  <div className="inner-slide event">
+                      <h1 >Viterbo Alert</h1>
+                      <img className="scroll-img evt-img" src='attention-clipart.jpg'/>
+                      <h2>{this.state.alert}</h2>
+                  </div>
+              </div>
+          );
+      }
 
       return(
 
@@ -177,6 +133,7 @@ class App extends Component {
         <Clock />
         </header>
         <div className="outer">
+
             {isLoaded
                 ? <SlideShow slides={this.state.photos} monitor={this.monitor} />
                 : <div>Waiting</div>

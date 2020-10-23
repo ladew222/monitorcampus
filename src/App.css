@@ -23,66 +23,6 @@
   font-size: 1.5em;
   float: left;
 }
-.evt-img{
-  max-width: 480px;
-  margin-top: 24px;
-}
-
-.port .evt-img{
-  box-shadow: 12px 12px #a71d36;
-}
-
-.stripe-1 {
-  color: white;
-  background: repeating-linear-gradient(
-          45deg,
-          #889aaa,
-          #889aaa 25px,
-          #6d89a4 25px,
-          #6d89a4 50px
-  );
-  min-height: 700px;
-  min-width: 1500px;
-}
-
-.port1 .evt-img{
-}
-
-.land{
-  color: white;
-  background: #a51f39;
-  min-height: 700px;
-  min-width: 1500px;
-}
-.land .evt-img{
-  box-shadow: 12px 12px #1f2f5f;
-}
-
-.port1 .back {
-  color: white;
-  background: #a51f39;
-  min-height: 700px;
-  min-width: 1500px;
-}
-
-.port2 .evt-img{
-  box-shadow: 12px 12px #a71d36;
-}
-
-.port2 .back {
-  color: white;
-  background: #5a6268;
-  min-height: 700px;
-  min-width: 1500px;
-}
-
-.port3 .evt-img{
-  box-shadow: 12px 12px #a71d36;
-}
-
-.port3 .back {
-
-}
 
 
 .App-intro {
@@ -98,20 +38,13 @@
   background: #1f2f5f;
 }
 
-.slick-slide div {
 
-}
-.scroll-img{
-  margin:auto;
-  max-width: 100%;
-}
 .outer{
   margin-right: 5%;
   margin-left: 5%;
   padding-top: 40px;
 }
-.slide-outer{
-}
+
 .inner-slide{
   display: table-cell;
   vertical-align: middle;
@@ -120,6 +53,9 @@
   display: table;
   text-align: center;
   margin: auto;
+}
+.slide-container img{
+  max-width: 100%;
 }
 
 
@@ -136,16 +72,6 @@ div.slide-title {
 
 }
 
-.date{
-  padding-top: 24px;
-  font-weight: bold;
-  font-color:#ffffff;
-}
 
-.body-text{
-  font-size: 24px;
-  color: #1f2f5f;
-  font-weight: bold;
-}
 
 

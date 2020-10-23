@@ -66,7 +66,7 @@ class Slide extends React.Component {
     }
     render() {
         return (
-            <div className="ggg">
+            <div className="slide-container">
                 <img src={'https://www.viterbo.edu' + this.props.slide.field_scroller_image} alt={this.props.imageAlt} />
 
             </div>
