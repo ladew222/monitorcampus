@@ -6,16 +6,6 @@ import './App.css';
 import SlideShow from './SlideShow';
 import  Clock from './Clock'
 
-const options = {
-    timeZone:"Canada/Central",
-    hour12 : true,
-    hour:  "numeric",
-    minute: "numeric",seconds:"numeric"
-}
-
-
-
-
 
 
 class App extends Component {
@@ -135,7 +125,7 @@ class App extends Component {
         <div className="outer">
 
             {isLoaded
-                ? <SlideShow slides={this.state.photos} monitor={this.monitor} />
+                ? <SlideShow slides={this.state.photos} monitor={this.monitor} speed={12000} />
                 : <div>Waiting</div>
             }
 

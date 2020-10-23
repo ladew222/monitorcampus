@@ -15,7 +15,7 @@ class SlideShow extends Component {
     }
 
     componentDidMount() {
-        this.interval = setInterval(this.transitionToNextSlide.bind(this), 3400);
+        this.interval = setInterval(this.transitionToNextSlide.bind(this), this.props.speed);
     }
 
     componentWillUnmount() {
