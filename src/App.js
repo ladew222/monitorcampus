@@ -178,7 +178,7 @@ class App extends Component {
         </header>
         <div className="outer">
             {isLoaded
-                ? <SlideShow slides={this.state.photos} />
+                ? <SlideShow slides={this.state.photos} monitor={this.monitor} />
                 : <div>Waiting</div>
             }
 
