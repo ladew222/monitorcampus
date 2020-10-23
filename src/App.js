@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
+import { useState } from 'react';
 import request from 'superagent';
 import logo from './logo-red.svg';
 import './App.css';
-import Slider from "react-slick";  //slider library loaded via npm
-import Sound from 'react-sound';  //sound library loaded via npm
-//import { BrowserRouter as Router, Route } from 'react-router-dom'
-//import $ from 'jquery';
+import SlideShow from './SlideShow';
+
 
 //centering inline css for slide
 let fillimg = {
@@ -19,6 +18,9 @@ const options = {
     hour:  "numeric",
     minute: "numeric",seconds:"numeric"
 }
+
+
+
 
 class Clock extends React.Component {
     constructor(props) {
@@ -56,6 +58,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoaded: false,
       photos: []
     }
     //http://viterbouniveristyd8dev.prod.acquia-sites.com/
@@ -63,7 +66,7 @@ class App extends Component {
     this.video_feed ="http://vuwebcam.viterbo.edu/mjpg/video.mjpg"
     var urlParams = new URLSearchParams(window.location.search);
     this.monitor = urlParams.get('monitor');
-    //this.monitor='comm';
+    this.monitor='comm';
     this.vid = urlParams.get('video');
     this.exit = urlParams.get('exit');
     this.exit_img = "https://monitors.viterbo.edu/"+ this.exit +".jpg"
@@ -75,8 +78,12 @@ class App extends Component {
     //this.slide_num = 0;
   }
 
+    componentWillMount() {
+
+    }
+
   componentDidMount() {
-    this.fetchPhotos();
+   this.fetchPhotos();
     this.reportStatus();
     setInterval((this.fetchPhotos), 180000); // 3 minutes in milliseconds
     setInterval((this.checkAlert),  8000); // 8 seconds\
@@ -90,6 +97,7 @@ class App extends Component {
         .get(this.server_name + this.monitor +'?'+ randomstring.generate(4))
         .then((res) => {
               this.setState({
+              isLoaded: true,
               photos: res.body
             })
         })
@@ -159,214 +167,24 @@ class App extends Component {
   render() {
     const tpad = this.padtop;
     const isAlert = this.isAlert;
-    const isVideo = this.isVideo;
-    const isExit = this.isExit;
-    const sound = isAlert ? ( //if alert play sound
-    <Sound
-        url="alarm.wav"
-    playStatus={Sound.status.PLAYING}
-    playFromPosition={0 /* in milliseconds */}
-    onLoading={this.handleSongLoading}
-    onPlaying={this.handleSongPlaying}
-    onFinishedPlaying={this.handleSongFinishedPlaying}
-  />
-  ) : (
-    <nosound/>
-  );
-   // var speed=11000; //set speed based on variable hardcoded now
-   /* if (this.state.photos.length>0){
-      speed=this.state.photos[0].Speed;
-    }*/
-    var settings = {
-      dots: false,
-      infinite: true,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      autoplay: true,
-      speed: 1000,
-      fade: true,
-      autoplaySpeed: 12000,
-      cssEase: "linear",
-      arrows: false,
-      afterChange: function(currentSlide) {
-          var url = new URL(window.location.href);
-          var monitor = url.searchParams.get("monitor");
-          console.log('https://monitors.viterbo.edu/alerts/reportslide.php?monitor=' + monitor  + "&slide=" + currentSlide)
-          request
-              .get('https://monitors.viterbo.edu/alerts/reportslide.php?monitor=' + monitor  + "&slide=" + currentSlide)
-              .then((res) => {
-
-              })
-              .catch(err => {
-                  // err.message, err.response
-              });
-          }
-    };
-    var outerClass = 'outer' + ' '  + this.monitor;
-      if (this.isVideo) {
-          return (
-              <div className="App">
-                  <video className="vid" loop autoPlay muted >
-                    <source src="https://webforms.exchange.viterbo.edu/videos/reslife.mp4" type="video/mp4"/>
-                  </video>
-              </div>
-      );
-
-      }
-      if (this.isExit) {
-          return (
-              <div className="App">
-                  <img alt='img' src= {this.exit_img } style={{height:"100%"}} />
-              </div>
-          );
-
-      }
+    const { isLoaded, photos } = this.state;
 
       return(
+
         <div className="App">
         <header className="App-header"  style={{ padding: tpad+"px"}}>
         <img src={logo} className="App-logo" alt="logo" />
         <Clock />
         </header>
-        <div className={outerClass}>
-        {sound}
-        <Slider {...settings}>
-          {this.state.photos.map((photo, key) => { //loop through photos to output each photo inside slider widget
-            return (
-                <div key={photo.nid} className="slide-outer">
-                    {photo.type === 'Landscape Basic' ? ( //differnt content depending on type
-                     <div className="slide-container">
-                        <div className="inner-slide event">
-                            <br/>
-                          <div className="slide-title">{photo.title}</div>
-                          <img alt='img' className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
-                          <h2>{photo.field_event_date}</h2>
-                          <h2>{photo.field_location_name}</h2>
-                            <br/>
-                          <p>{photo.body}</p>
-                        </div>
-                     </div>
-                    ):photo.type === 'Landscape Red' ? ( //differnt content depending on type
-                        <div className="slide-container land">
-                            <div className="container-fluid">
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <div className="row">
-                                            <div className="col-md-12">
-                                                <div className="slide-title">{photo.title}</div>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-md-8">
-                                                <img alt='img' className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
-                                            </div>
-                                            <div className="col-md-4">
-                                                <br/>
-                                                <h2>{photo.field_event_date}</h2>
-                                                <hr/>
-                                                <h2>{photo.field_location_name}</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ):photo.type === 'Portrait Striped' ? ( //differnt content depending on type
-                     <div className="slide-container stripe-1 port">
-                         <div className="container-fluid">
-                            <div className="row">
-                                <div className="col-md-12">
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-8">
-                                    <div className="slide-title">
-                                        <span >{photo.title}</span>
-                                    </div>
-                                    <h2 className="date">{photo.field_event_date}</h2>
-                                    <h2>{photo.field_location_name}</h2>
-                                    <br/>
-                                    <p className="body-text">{photo.body}</p>
-                                </div>
-                                <div className="col-md-4">
-                                    <br/>
+        <div className="outer">
+            {isLoaded
+                ? <SlideShow slides={this.state.photos} />
+                : <div>Waiting</div>
+            }
 
-                                    <img alt='img' className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
-                                </div>
-                            </div>
-                        </div>
-                     </div>
-                    ):photo.type === 'Portrait Basic' ? ( //differnt content depending on type
-                        <div className="slide-container port1">
-                            <div className="container-fluid">
-                                <div className="row">
-                                    <div className="col-md-12">
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-md-8">
-                                        <div className="slide-title">
-                                            <span >{photo.title}</span>
-                                        </div>
-                                        <h2 className="date">{photo.field_event_date}</h2>
-                                        <h2>{photo.field_location_name}</h2>
-                                        <br/>
-                                        <p className="body-text">{photo.body}</p>
-                                    </div>
-                                    <div className="col-md-4">
-                                        <br/>
 
-                                        <img alt='img' className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ):photo.type === 'Portrait Grey' ? ( //differnt content depending on type
-                        <div className="slide-container stripe-1 port">
-                            <div className="container-fluid">
-                                <div className="row">
-                                    <div className="col-md-12">
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-md-8">
-                                        <div className="slide-title">
-                                            <span >{photo.title}</span>
-                                        </div>
-                                        <h2 className="date">{photo.field_event_date}</h2>
-                                        <h2>{photo.field_location_name}</h2>
-                                        <br/>
-                                        <p className="body-text">{photo.body}</p>
-                                    </div>
-                                    <div className="col-md-4">
-                                        <br/>
-
-                                        <img alt='img' className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ):photo.type === 'Scrolling Image' ?(//image type
-                         <div className="slide-container">
-                            <div className="inner-slide photo">
-                              <img alt='img' className="scroll-img" style={fillimg} src= {this.server_name + photo.field_scroller_image}/>
-                            </div>
-                         </div>
-                    ): (// alert
-                        <div className="slide-container">
-                            <div className="inner-slide event">
-                                  <h1 >{photo.title}</h1>
-                                  <img alt='img' className="scroll-img evt-img" src= {this.server_name + photo.field_event_image}/>
-                                  <h2>{photo.body}</h2>
-                             </div>
-                        </div>
-                    )}
-                </div>
-            )
-          })}
-        </Slider>
-      </div>
-      </div>
+        </div>
+        </div>
       );
   }
 }
