@@ -23,7 +23,7 @@ class App extends Component {
     this.video_feed ="http://vuwebcam.viterbo.edu/mjpg/video.mjpg"
     var urlParams = new URLSearchParams(window.location.search);
     this.monitor = urlParams.get('monitor');
-    this.monitor='comm';
+    //this.monitor='comm';
     this.fetchPhotos = this.fetchPhotos.bind(this)  //needed for reference below
     this.checkAlert = this.checkAlert.bind(this)  //needed for reference below
       // this.reportStatus = this.reportStatus.bind(this)  //needed for reference below
@@ -100,16 +100,16 @@ class App extends Component {
 
   render() {
     const tpad = this.padtop;
-    const isAlert = this.isAlert;
+    const isAlert = this.state.isAlert;
     const { isLoaded, photos } = this.state;
 
-      if (this.isAlert) {
+      if (this.state.isAlert) {
           return (
               <div className="slide-container">
                   <div className="inner-slide event">
-                      <h1 >Viterbo Alert</h1>
-                      <img className="scroll-img evt-img" src='attention-clipart.jpg'/>
-                      <h2>{this.state.alert}</h2>
+                      <h1 className="evt-head" >Viterbo Alert</h1>
+                      <img className="scroll-img evt-img" src='attention-clipart.jpg' ma/>
+                      <h2 className="evt-body">{this.state.alert}</h2>
                   </div>
               </div>
           );
