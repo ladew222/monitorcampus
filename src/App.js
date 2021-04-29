@@ -5,6 +5,7 @@ import logo from './logo-red.svg';
 import './App.css';
 import SlideShow from './SlideShow';
 import  Clock from './Clock'
+import  IpcExample from './ipcExample'
 
 
 
@@ -23,7 +24,7 @@ class App extends Component {
     this.video_feed ="http://vuwebcam.viterbo.edu/mjpg/video.mjpg"
     var urlParams = new URLSearchParams(window.location.search);
     this.monitor = urlParams.get('monitor');
-    //this.monitor='comm';
+    this.monitor='comm';
     this.fetchPhotos = this.fetchPhotos.bind(this)  //needed for reference below
     this.checkAlert = this.checkAlert.bind(this)  //needed for reference below
       // this.reportStatus = this.reportStatus.bind(this)  //needed for reference below
@@ -94,8 +95,6 @@ class App extends Component {
           .catch(err => {
             // err.message, err.response
          });
-
-
   }
 
   render() {
@@ -122,6 +121,7 @@ class App extends Component {
         <img src={logo} className="App-logo" alt="logo" />
         <Clock />
         </header>
+            <IpcExample />
         <div className="outer">
 
             {isLoaded
