@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component, useState} from 'react';
 import request from "superagent";
+const ipcRenderer = window.require("electron").ipcRenderer;
+
 
 
 
@@ -14,14 +16,32 @@ class SlideShow extends Component {
 
     }
 
+
     componentDidMount() {
         this.interval = setInterval(this.transitionToNextSlide.bind(this), this.props.speed);
+        ipcRenderer.on('my-ipc-channel', this.transitionToPreviousSlide);
     }
 
     componentWillUnmount() {
         if (this.interval) {
             clearInterval(this.interval);
         }
+    }
+
+    transitionToPreviousSlide() {
+        this.setState({slideIndex: (this.state.slideIndex - 1) % this.props.slides.length})
+
+        request
+            .get('https://monitors.viterbo.edu/alerts/reportslide.php?monitor=' + this.props.monitor +  "&slide=" + this.state.slideIndex)
+            .then((res) => {
+
+            })
+            .catch(err => {
+                // err.message, err.response
+            });
+
+        //console.log('https://monitors.viterbo.edu/alerts/reportslide.php?monitor=' + monitor  + "&slide=" + currentSlide)
+
     }
 
     transitionToNextSlide() {

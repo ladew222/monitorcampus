@@ -11,7 +11,10 @@ export default function IpcExample() {
 
     const handleResponse = (_event: any, response: Response) => {
         setMessage(response.message);
+
     };
+
+
 
     useEffect((): any => {
         ipcRenderer.on('my-ipc-channel', handleResponse);
