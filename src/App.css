@@ -86,4 +86,22 @@ h2.evt-body{
   padding-top: 130px;
   font-size: 60px;
 }
+#evt-itm{
+  justify-content: space-between;
+  display: flex;
+  padding-bottom: 9px;
+}
+#left{
+  align-self: center;
+  padding: 22px 28px;
+  color: antiquewhite;
+  background-color: #a71f36;
+}
+#right{
+  flex-grow:1;
+  padding: 22px 28px;
+  background-color: #F3F3F3;
+  font-size: 24px;
+}
+
 

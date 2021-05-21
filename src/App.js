@@ -5,7 +5,6 @@ import logo from './logo-red.svg';
 import './App.css';
 import SlideShow from './SlideShow';
 import  Clock from './Clock'
-import  IpcExample from './ipcExample'
 
 
 
@@ -121,7 +120,6 @@ class App extends Component {
         <img src={logo} className="App-logo" alt="logo" />
         <Clock />
         </header>
-            <IpcExample />
         <div className="outer">
 
             {isLoaded
