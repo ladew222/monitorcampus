@@ -58,9 +58,9 @@ class App extends Component {
         });
   }
   reportStatus() {  //call api from drupal to get slides, stores in photos
-      var url = new URL(window.location.href);
-      var monitor = url.searchParams.get("monitor");
-      var report = url.searchParams.get("report");
+      const url = new URL(window.location.href);
+      const monitor = url.searchParams.get("monitor");
+      const report = url.searchParams.get("report");
       if ("1" === "1") {
           ///  var curr = $('.slick-track').children('.slick-slide').css('opacity','1');
           request
@@ -74,8 +74,9 @@ class App extends Component {
           }
   }
   checkAlert() {  //checks libservices for alert json string to see if active
+       const monitor = url.searchParams.get("monitor");
     request
-          .get('https://monitors.viterbo.edu/alerts/site.php')
+          .get('https://monitors.viterbo.edu/alerts/site.php?monitor='+ monitor )
           .then((res) => {
               var rslts = JSON.parse(res.text);
               if (rslts.status === true) { ///las
@@ -100,36 +101,51 @@ class App extends Component {
     const tpad = this.padtop;
     const isAlert = this.state.isAlert;
     const { isLoaded, photos } = this.state;
+    let widget;
 
-      if (this.state.isAlert) {
-          return (
+      switch(this.state.isAlert) {
+      case 0:
+          widget =
+              <div className="slide-container">
+              <div className="inner-slide event">
+                  <h1 className="evt-head" >Viterbo Alert</h1>
+                  <img className="scroll-img evt-img" src='attention-clipart.jpg' ma/>
+                  <h2 className="evt-body">{this.state.alert}</h2>
+              </div>
+          </div>
+          break;
+      case 1:
+          widget =
+              <div>
+                  <header className="App-header"  style={{ padding: tpad+"px"}}>
+                      <img src={logo} className="App-logo" alt="logo" />
+                      <Clock />
+                  </header>å
+                  <div className="outer">
+                      {isLoaded
+                          ? <SlideShow slides={this.state.photos} feed={this.monitor} speed={12000} />
+                          : <div>Waiting</div>
+                      }
+                  </div>
+            </div>
+          break;
+      case 2:
+          widget =
               <div className="slide-container">
                   <div className="inner-slide event">
                       <h1 className="evt-head" >Viterbo Alert</h1>
                       <img className="scroll-img evt-img" src='attention-clipart.jpg' ma/>
-                      <h2 className="evt-body">{this.state.alert}</h2>
+                      <h2 className="evt-body"></h2>
                   </div>
               </div>
-          );
+          break;
+      default:
+          widget =  "";
       }
 
+      if (this.state.isAlert) {
       return(
-
-        <div className="App">
-        <header className="App-header"  style={{ padding: tpad+"px"}}>
-        <img src={logo} className="App-logo" alt="logo" />
-        <Clock />
-        </header>
-        <div className="outer">
-
-            {isLoaded
-                ? <SlideShow slides={this.state.photos} monitor={this.monitor} speed={12000} />
-                : <div>Waiting</div>
-            }
-
-
-        </div>
-        </div>
+          <div className="App">{widget}</div>
       );
   }
 }

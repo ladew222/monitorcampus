@@ -10,8 +10,7 @@ class SlideShow extends Component {
         super(props, context);
         this.state = {
             slideIndex: 0,
-            isMap:0,
-            isOverview:0,
+            feed:0,
         };
         this.interval = null;
 
@@ -27,6 +26,14 @@ class SlideShow extends Component {
                 console.log('Message received');
                 console.log(data);
                 // ... change the state of this React component.
+                request
+                    .get('https://monitors.viterbo.edu/alerts/reportaction.php?monitor=' + 'this.props.monitor' +  "&action=" + inp)
+                    .then((res) => {
+
+                    })
+                    .catch(err => {
+                        // err.message, err.response
+                    });
                 if (inp == "Left") {
                     console.log("Going Left:");
                     let new_index = 0;
@@ -50,14 +57,14 @@ class SlideShow extends Component {
                 }
                 if (inp == 'Up') {
                     console.log("Going Map");
-                    self.setState({isMap: 1});
+                    self.setState({feed: 1});
                 }
                 if (inp == 'Down') {
                     console.log("Overview");
-                    self.setState({isOverview: 1});
+                    self.setState({feed: 2});
                 }
                 if (inp == 'AntiClockwise') {
-
+                    //send reboot signal
                 }
 
             });
@@ -97,21 +104,33 @@ class SlideShow extends Component {
             width: '100%'
         };
         const { slideIndex, isMap } = this.state;
-        const Overview = this.state.isOverview;
+        const Overview = this.state.feed;
         let widget;
-        if (Overview == 0){
-            widget = <ul id={"evt-lst"}>
-                {this.props.slides.map(function(item) {
-                    return <li id="evt-itm" key={item.nid}> <div id="left">{item.field_event_date}</div>
-                        <div id="right">{item.title}</div></li>;
-                })}
-            </ul>
 
-        }
-        else{
-            widget = <Slide slide={this.props.slides[this.state.slideIndex]} alt={this.props.imageAlt}
-                            mode={this.state.isMap}/>;
-
+        switch(Overview) {
+            case 1:
+                widget = <ul id={"evt-lst"}>
+                    {this.props.slides.map(function(item) {
+                        return <li id="evt-itm" key={item.nid}> <div id="left">{item.field_event_date}<br/>{item.field_event_location} </div>
+                            <div id="right">{item.title}</div></li>
+                    })}
+                </ul>
+                break;
+            case 0:
+                widget = <Slide slide={this.props.slides[this.state.slideIndex]} alt={this.props.imageAlt}
+                       mode={this.state.isMap}/>
+                break;
+            case 1:
+                widget = <div className="slide-container">
+                    <img src={'https://monitors.viterbo.edu/resources/CampusMap.jpeg'} alt={this.props.imageAlt} />
+                    </div>
+                break;
+            case 2:
+                widget = <Slide slide={this.props.slides[this.state.slideIndex]} alt={this.props.imageAlt}
+                                mode={this.state.isMap}/>
+                break;
+            default:
+                widget =  "";
         }
 
         return (
@@ -134,17 +153,9 @@ class Slide extends React.Component {
     render() {
         return (
             <div className="outer">
-
-                {this.props.mode
-                    ? <div className="slide-container">
-                        <img src={'https://monitors.viterbo.edu/resources/CampusMap.jpeg'} alt={this.props.imageAlt} />
-                    </div>
-                    : <div className="slide-container">
-                        <img src={'https://www.viterbo.edu' + this.props.slide.field_scroller_image} alt={this.props.imageAlt} />
-                    </div>
-                }
-
-
+                <div className="slide-container">
+                    <img src={'https://www.viterbo.edu' + this.props.slide.field_scroller_image}build alt={this.props.imageAlt} />
+                </div>
             </div>
         );
     }
