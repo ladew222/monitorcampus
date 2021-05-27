@@ -65,6 +65,7 @@ class SlideShow extends Component {
                 }
                 if (inp == 'AntiClockwise') {
                     //send reboot signal
+                    window.require('electron').ipcRenderer.send('am', 'reboot');
                 }
 
             });
