@@ -16,6 +16,7 @@ class App extends Component {
       isAlert: false,
       isLoaded: false,
       photos: [],
+      feed:0,
 
     }
     //http://viterbouniveristyd8dev.prod.acquia-sites.com/
@@ -74,23 +75,17 @@ class App extends Component {
           }
   }
   checkAlert() {  //checks libservices for alert json string to see if active
+      const url = new URL(window.location.href);
        const monitor = url.searchParams.get("monitor");
     request
-          .get('https://monitors.viterbo.edu/alerts/site.php?monitor='+ monitor )
+          .get('https://monitors.viterbo.edu/alerts/feeds.php?monitor='+ monitor )
           .then((res) => {
-              var rslts = JSON.parse(res.text);
-              if (rslts.status === true) { ///las
-                  this.setState({
-                      isAlert: true,
-                      alert: rslts.message
-                  })
-              }
-              if ((rslts.status === false) && this.state.isAlert){
-                  this.setState({
-                      isAlert: false,
-                      alert: ''
-                  })
-              }
+              let rslts = JSON.parse(res.text);
+              this.setState({
+                  isAlert: rslts.alert ,
+                  alert: rslts.message,
+                  feed: rslts.feed,
+              })
           })
           .catch(err => {
             // err.message, err.response
@@ -101,51 +96,51 @@ class App extends Component {
     const tpad = this.padtop;
     const isAlert = this.state.isAlert;
     const { isLoaded, photos } = this.state;
+
     let widget;
 
-      switch(this.state.isAlert) {
-      case 0:
-          widget =
-              <div className="slide-container">
-              <div className="inner-slide event">
-                  <h1 className="evt-head" >Viterbo Alert</h1>
-                  <img className="scroll-img evt-img" src='attention-clipart.jpg' ma/>
-                  <h2 className="evt-body">{this.state.alert}</h2>
-              </div>
-          </div>
-          break;
-      case 1:
-          widget =
-              <div>
-                  <header className="App-header"  style={{ padding: tpad+"px"}}>
-                      <img src={logo} className="App-logo" alt="logo" />
-                      <Clock />
-                  </header>å
-                  <div className="outer">
-                      {isLoaded
-                          ? <SlideShow slides={this.state.photos} feed={this.monitor} speed={12000} />
-                          : <div>Waiting</div>
-                      }
-                  </div>
-            </div>
-          break;
-      case 2:
-          widget =
-              <div className="slide-container">
+      switch(this.state.feed) {
+          case 1:
+              widget = <div className="slide-container">
                   <div className="inner-slide event">
                       <h1 className="evt-head" >Viterbo Alert</h1>
                       <img className="scroll-img evt-img" src='attention-clipart.jpg' ma/>
-                      <h2 className="evt-body"></h2>
+                      <h2 className="evt-body">{this.state.alert}</h2>
                   </div>
               </div>
-          break;
-      default:
-          widget =  "";
+              break;
+          case 0:
+              widget =
+                  <div className="App">
+                  <header className="App-header"  style={{ padding: tpad+"px"}}>
+                      <img src={logo} className="App-logo" alt="logo" />
+                      <Clock />
+                  </header>
+                  <div className="outer">
+
+                      {isLoaded
+                          ? <SlideShow slides={this.state.photos} monitor={this.monitor} speed={12000} />
+                          : <div>Waiting</div>
+                      }
+
+                  </div>
+              </div>
+              break;
+          case 2:
+              widget = <div className="slide-container">
+                  <div className="inner-slide event">
+                      <img src="http://vuwebcam.viterbo.edu/mjpg/video.mjpg"></img>
+                  </div>
+              </div>
+              break;
+          default:
+              widget =  "";
       }
 
-      if (this.state.isAlert) {
+
       return(
-          <div className="App">{widget}</div>
+
+          <div>{widget}</div>
       );
   }
 }
