@@ -80,6 +80,7 @@ class SlideShow extends Component {
 
 
     transitionToNextSlide() {
+        this.props.onChangeSlide(this.state.slideIndex + 1);
         this.setState({slideIndex: (this.state.slideIndex + 1) % this.props.slides.length});
         console.log("Next Slide");
         console.log("Current Slide:"+ this.state.slideIndex);
@@ -155,7 +156,7 @@ class Slide extends React.Component {
         return (
             <div className="outer">
                 <div className="slide-container">
-                    <img src={'https://www.viterbo.edu' + this.props.slide.field_scroller_image}build alt={this.props.imageAlt} />
+                    <img src={'https://www.viterbo.edu' + this.props.slide.field_scroller_image} alt={this.props.imageAlt} />
                 </div>
             </div>
         );

@@ -24,11 +24,11 @@ class App extends Component {
     this.video_feed ="http://vuwebcam.viterbo.edu/mjpg/video.mjpg"
     var urlParams = new URLSearchParams(window.location.search);
     this.monitor = urlParams.get('monitor');
-    this.monitor='comm';
+    //this.monitor='comm';
     this.fetchPhotos = this.fetchPhotos.bind(this)  //needed for reference below
     this.checkAlert = this.checkAlert.bind(this)  //needed for reference below
       // this.reportStatus = this.reportStatus.bind(this)  //needed for reference below
-    //this.slide_num = 0;
+    this.slide_num = 0;
   }
 
     componentWillMount() {
@@ -42,6 +42,8 @@ class App extends Component {
     setInterval((this.checkAlert),  8000); // 8 seconds\
     setInterval((this.reportStatus),  95000); // 95 seconds
   }
+  handleChangeSlide = e => this.slide_num = e.target.value;
+
 
   fetchPhotos() {  //call api from drupal to get slides, stores in photos
     var randomstring = require("randomstring");
@@ -65,8 +67,9 @@ class App extends Component {
       if ("1" === "1") {
           ///  var curr = $('.slick-track').children('.slick-slide').css('opacity','1');
           request
-              .get('https://monitors.viterbo.edu/alerts/reportstatus.php?monitor=' + monitor + "&status=" + 0 + "&slide=" + 1)
+              .get('https://monitors.viterbo.edu/api/reportstatus.php?monitor=' + monitor + "&status=" + 0 + "&slide=" + this.slide_num)
               .then((res) => {
+                  console.log(res.text);
 
               })
               .catch(err => {
@@ -76,16 +79,20 @@ class App extends Component {
   }
   checkAlert() {  //checks libservices for alert json string to see if active
       const url = new URL(window.location.href);
-       const monitor = url.searchParams.get("monitor");
+      const monitor = url.searchParams.get("monitor");
+      var randomstring = require("randomstring");
     request
-          .get('https://monitors.viterbo.edu/alerts/feeds.php?monitor='+ monitor )
+          .get('https://monitors.viterbo.edu/api/feeds.php?monitor='+ monitor +'&'+ randomstring.generate(4) )
           .then((res) => {
               let rslts = JSON.parse(res.text);
               this.setState({
-                  isAlert: rslts.alert ,
-                  alert: rslts.message,
+                  isAlert: rslts.alert,
+                  message: rslts.message,
                   feed: rslts.feed,
               })
+              if (this.state.feed == 4){
+                  window.require('electron').ipcRenderer.send('am', 'reboot');
+              }
           })
           .catch(err => {
             // err.message, err.response
@@ -100,16 +107,7 @@ class App extends Component {
     let widget;
 
       switch(this.state.feed) {
-          case 1:
-              widget = <div className="slide-container">
-                  <div className="inner-slide event">
-                      <h1 className="evt-head" >Viterbo Alert</h1>
-                      <img className="scroll-img evt-img" src='attention-clipart.jpg' ma/>
-                      <h2 className="evt-body">{this.state.alert}</h2>
-                  </div>
-              </div>
-              break;
-          case 0:
+          case "0":
               widget =
                   <div className="App">
                   <header className="App-header"  style={{ padding: tpad+"px"}}>
@@ -126,15 +124,45 @@ class App extends Component {
                   </div>
               </div>
               break;
-          case 2:
+          case "1":
+              widget = <div className="slide-container">
+                  <div className="inner-slide event">
+                      <h1 className="evt-head" >Viterbo Alert</h1>
+                      <img className="scroll-img evt-img" src='attention-clipart.jpg' ma/>
+                      <h2 className="evt-body">{this.state.message}</h2>
+                  </div>
+              </div>
+              break;
+          case "2":
               widget = <div className="slide-container">
                   <div className="inner-slide event">
                       <img src="http://vuwebcam.viterbo.edu/mjpg/video.mjpg"></img>
                   </div>
               </div>
               break;
+          case "4":
+              widget = <div className="slide-container">
+                  <div className="inner-slide event">
+                      <h1>Rebooting...</h1>
+                  </div>
+              </div>
+              break;
           default:
-              widget =  "";
+              widget =
+                  <div className="App">
+                      <header className="App-header"  style={{ padding: tpad+"px"}}>
+                          <img src={logo} className="App-logo" alt="logo" />
+                          <Clock />
+                      </header>
+                      <div className="outer">
+
+                          {isLoaded
+                              ? <SlideShow slides={this.state.photos} monitor={this.monitor} speed={12000} onChangeSlide={this.handleChangeSlide} />
+                              : <div>Waiting</div>
+                          }
+
+                      </div>
+                  </div>
       }
 
 
