@@ -5,6 +5,9 @@ import logo from './logo-red.svg';
 import './App.css';
 import SlideShow from './SlideShow';
 import  Clock from './Clock'
+import { Player } from 'video-react';
+import HLSSource from './HLSSource';
+import VideoPlayer from "./VideoPlayer";
 
 
 
@@ -31,9 +34,6 @@ class App extends Component {
     this.slide_num = 0;
   }
 
-    componentWillMount() {
-
-    }
 
   componentDidMount() {
    this.fetchPhotos();
@@ -44,7 +44,10 @@ class App extends Component {
   }
   handleChangeSlide = e => this.slide_num = e.target.value;
 
+  componentDidUpdate() {
 
+
+  }
   fetchPhotos() {  //call api from drupal to get slides, stores in photos
     var randomstring = require("randomstring");
     randomstring.generate(7);
@@ -85,11 +88,11 @@ class App extends Component {
           .get('https://monitors.viterbo.edu/api/feeds.php?monitor='+ monitor +'&'+ randomstring.generate(4) )
           .then((res) => {
               let rslts = JSON.parse(res.text);
-              this.setState({
+             /* this.setState({
                   isAlert: rslts.alert,
                   message: rslts.message,
                   feed: rslts.feed,
-              })
+              })*/
               if (this.state.feed == 4){
                   window.require('electron').ipcRenderer.send('am', 'reboot');
               }
@@ -106,7 +109,7 @@ class App extends Component {
 
     let widget;
 
-      switch(this.state.feed) {
+      switch("2") {
           case "0":
               widget =
                   <div className="App">
@@ -134,11 +137,7 @@ class App extends Component {
               </div>
               break;
           case "2":
-              widget = <div className="slide-container">
-                  <div className="inner-slide event">
-                      <img src="http://vuwebcam.viterbo.edu/mjpg/video.mjpg"></img>
-                  </div>
-              </div>
+              widget =  <VideoPlayer/>
               break;
           case "4":
               widget = <div className="slide-container">
