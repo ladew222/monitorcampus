@@ -12,6 +12,7 @@ export default class VideoPlayer extends React.Component {
                 src="https://monitors.viterbo.edu/vid/file.m3u8"
                 hlsConfig={{
                     maxLoadingDelay: 4,
+                    autoPlay: true,
                     minAutoBitrate: 0,
                     lowLatencyMode: true,
                 }}
