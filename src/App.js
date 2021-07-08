@@ -42,7 +42,6 @@ class App extends Component {
     setInterval((this.checkAlert),  8000); // 8 seconds\
     setInterval((this.reportStatus),  95000); // 95 seconds
   }
-  handleChangeSlide = e => this.slide_num = e.target.value;
 
   componentDidUpdate() {
 
@@ -88,11 +87,21 @@ class App extends Component {
           .get('https://monitors.viterbo.edu/api/feeds.php?monitor='+ monitor +'&'+ randomstring.generate(4) )
           .then((res) => {
               let rslts = JSON.parse(res.text);
-             /* this.setState({
+              let was = this.state.alert;
+              this.setState({
                   isAlert: rslts.alert,
-                  message: rslts.message,
+                  message: rslts.msg,
                   feed: rslts.feed,
-              })*/
+              })
+              //video off
+              if (was == 5 && this.state.alert !=5){
+                  window.require('electron').ipcRenderer.send('no_mon', 'reboot');
+              }
+              //video on
+              if (was != 6 && this.state.alert == 6){
+                  window.require('electron').ipcRenderer.send('mon', 'reboot');
+              }
+
               if (this.state.feed == 4){
                   window.require('electron').ipcRenderer.send('am', 'reboot');
               }
@@ -109,7 +118,7 @@ class App extends Component {
 
     let widget;
 
-      switch("2") {
+      switch(this.state.isAlert) {
           case "0":
               widget =
                   <div className="App">
@@ -123,7 +132,6 @@ class App extends Component {
                           ? <SlideShow slides={this.state.photos} monitor={this.monitor} speed={12000} />
                           : <div>Waiting</div>
                       }
-
                   </div>
               </div>
               break;
@@ -137,6 +145,11 @@ class App extends Component {
               </div>
               break;
           case "2":
+              widget =  <div className="photo-container">
+                  <img className="ext-img" src={ 'https://monitors.viterbo.edu/imgs/' + this.state.message } />
+              </div>
+              break;
+          case "3":
               widget =  <VideoPlayer/>
               break;
           case "4":

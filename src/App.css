@@ -37,7 +37,13 @@
   display: table !important;
   background: #1f2f5f;
 }
+.photo-container{
 
+}
+
+.ext-img{
+  width: 100%;
+}
 
 .outer{
   margin-right: 5%;

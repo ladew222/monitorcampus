@@ -80,7 +80,7 @@ class SlideShow extends Component {
 
 
     transitionToNextSlide() {
-        this.props.onChangeSlide(this.state.slideIndex + 1);
+       // this.props.onChangeSlide(this.state.slideIndex + 1);
         this.setState({slideIndex: (this.state.slideIndex + 1) % this.props.slides.length});
         console.log("Next Slide");
         console.log("Current Slide:"+ this.state.slideIndex);
