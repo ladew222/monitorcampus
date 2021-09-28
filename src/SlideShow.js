@@ -170,12 +170,10 @@ class Grid extends React.Component {
     }
     render() {
         return (
-            <div className="outer">
-                <ul>
+            <div className="grid">
                     {this.props.map(function(item) {
                         return <li key={this.props.title}>{this.props.title}</li>;
                     })}
-                </ul>
             </div>
         );
     }

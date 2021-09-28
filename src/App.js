@@ -8,6 +8,7 @@ import  Clock from './Clock'
 import { Player } from 'video-react';
 import HLSSource from './HLSSource';
 import VideoPlayer from "./VideoPlayer";
+import Menu from "./Menu";
 
 
 
@@ -18,6 +19,7 @@ class App extends Component {
       alert:'',
       isAlert: false,
       isLoaded: false,
+      static: '',
       photos: [],
       feed:0,
 
@@ -92,6 +94,7 @@ class App extends Component {
                   isAlert: rslts.alert,
                   message: rslts.msg,
                   feed: rslts.feed,
+                  static: rslts.static
               })
               //video off
               if (was == 5 && this.state.alert !=5){
@@ -157,6 +160,12 @@ class App extends Component {
                   <div className="inner-slide event">
                       <h1>Rebooting...</h1>
                   </div>
+              </div>
+              break;
+          case "5":
+              widget =
+              <div className="App">
+                  <Menu data={this.state.static}  />
               </div>
               break;
           default:
