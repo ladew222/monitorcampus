@@ -164,7 +164,7 @@ class App extends Component {
               break;
           case "5":
               widget =
-              <div className="App">
+              <div className="app menu-cont">
                   <Menu data={this.state.static}  />
               </div>
               break;

@@ -121,68 +121,6 @@ h2.evt-body{
   font-size: 24px;
 }
 
-.grid ul{
-  list-style-type: none; /* Remove bullets */
-
-}
- h2.menu{
-   color: #fff;
-   font-family: 'CubanoRegular';
-   font-size: 6vw;
-
- }
-.grid li{
-  list-style-type: none; /* Remove bullets */
-  font-family: 'Open Sans';
-}
-li.cal{
-  text-transform: capitalize;
-  font-size:.6vw;
-}
-
-li.dets{
-  height: 210px;
-}
-
-
-
-.grid hx{
-  font-family: 'Source Sans Pro', sans-serif;
-  font-size: 2.6vw;
-  font-weight: bold;
-  color:#a51d37;
-
-}
-
-div.outer-menu{
-  background: linear-gradient(#1f2f5f, #a51d37);
-  height: 100%;
-}
-
-.grid {
-  display: flex;                       /* establish flex container */
-  flex-wrap: wrap;                     /* enable flex items to wrap */
-  justify-content: space-around;
-  color:#fff;
-  border-radius: 15px;
-}
-.cell {
-  flex: 0 0 32%; /* don't grow, don't shrink, width */
-  margin-bottom: 5px;
-  margin-top:5px;
-  padding: 16px;
-  background-color: #fff;
-  color:#000;
-  display:inline-block ;
-  border: #999 solid 1px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 0px 1px #fff inset;
-}
-.cell:nth-child(3n) {
-  background-color: #fff;
-  color:#000;
-}
-
 .card{
   padding: 12px;
   font-size: 1vw;
@@ -196,7 +134,7 @@ div.outer-menu{
   text-align:left;
 }
 .tf {
-  color: #fff;
+  color: #1f2f5f;
   font-family: 'CubanoRegular';
   font-size: 3vw;
 }
@@ -209,4 +147,8 @@ h1:before, h3:after {
   width: 40px;
   margin: 0 -15px;
   background-color: #533834;
+}
+
+.app.menu-cont{
+  background: #fff;
 }
