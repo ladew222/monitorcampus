@@ -29,9 +29,11 @@
     "react-scripts": "1.1.4",
     "react-slick": "^0.27.12",
     "react-sound": "^1.2.0",
+    "react-textfit": "^1.1.1",
     "redux": "^4.1.0",
     "slick-carousel": "^1.8.1",
     "superagent": "^3.8.3",
+    "textfill": "^1.0.2",
     "url-search-params": "^1.1.0",
     "video-react": "^0.14.1",
     "video.js": "^7.12.3",
@@ -58,5 +60,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "file-loader": "^1.1.5",
+    "url-loader": "^0.6.2"
   }
 }

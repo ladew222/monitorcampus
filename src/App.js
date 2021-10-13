@@ -177,7 +177,7 @@ class App extends Component {
                       </header>
                       <div className="outer">
 
-                          {isLoaded
+                          {isLoaded && this.state.photos>0
                               ? <SlideShow slides={this.state.photos} monitor={this.monitor} speed={12000} onChangeSlide={this.handleChangeSlide} />
                               : <div>Waiting</div>
                           }
