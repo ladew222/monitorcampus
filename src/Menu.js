@@ -53,9 +53,36 @@ class onepage extends Component {
             });
     }
 
+    renderFooter(){
+        console.log("came here")
+        return(
+            <footer className="text-center text-white">
+                <div className="container p-2">
+                    <div className="row">
+                        <div className="col-lg-2 col-md-12 mb-4 mb-md-0">
+                            <img
+                                src="../media/vegitarian.png"
+                                className="w-50"
+                            />
+                        </div>
+                        <div className="col-lg-2 col-md-12 mb-4 mb-md-0">
+                            <img
+                                src="../media/vegan.png"
+                                className="w-50"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        );
+    }
+
+
+
+
     render() {
-        const vegan = 'https://viterbo.campusdish.com/-/media/Global/All%20Divisions/Dietary%20Information/Vegan-80x80.png';
-        const vegi= 'https://viterbo.campusdish.com/-/media/Global/All%20Divisions/Dietary%20Information/Vegan-80x80.png';
+        const vegan = '../media/veganicon.png';
+        const vegi=  '../media/vegicon.png';
         const { error, isLoaded, items } = this.state;
 
         const name = this.props.data.split('.')[0].toUpperCase();
@@ -63,36 +90,41 @@ class onepage extends Component {
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
-            return <div>Loading...</div>;
+            return <div className={'wait2'}>Loading...</div>;
         } else {
-            return <div className={'container-fluid py-5'}>
+            return <div className={'container-fluid py-4'}>
+                <div className="col-12">
+                    <p className="subtitle fancy">
+                        <span>{name}</span>
+                    </p>
                 <div className={'row'}>
-                    <div className={'col-lg-10 mx-auto col-12 text-center mb-3'}>
-                        <h1 className={'mt-0 tf'}>{name}</h1>
-                        <hr className="accent my-5"></hr>
-                    </div>
+
                     <div className={"card-columns"}>
                 {items.map(item => (
-                    <div className={'card X'}>
+                    <div className={'card X vw-42'}>
                         <span className={'float-right font-weight-bold'}>{item.calories}</span>
-                        <h6 className={'text-truncate'}>{item.title}</h6>
+                        <h3 className={'text-truncate'}>{item.title}</h3>
                         <p className={'small'}>{item.details}</p>
-                            {item.isvegan
-                                ? <div className={"font-weight-bold small"}><img src={vegan}/></div>
+                            {item.isvegan =="true"
+                                ? <div className={"font-weight-bold small ext"}><img src={vegan}/></div>
                                 : <span/>
                             }
-                            {item.isvegetarian
-                                ? <div><img src={vegi}/></div>
+                            {item.isvegetarian == "true"
+                                ? <div className={"font-weight-bold smal ext"} ><img src={vegi}/></div>
                                 : <span/>
                             }
                     </div>
                 ))}
             </div>
             </div>
-            </div>;
+            </div>
+                {this.renderFooter()}
+            </div>
         }
     }
 }
 
 
 export default onepage;
+
+

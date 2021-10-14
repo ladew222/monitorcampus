@@ -124,14 +124,16 @@ h2.evt-body{
 .card{
   padding: 12px;
   font-size: 1vw;
+  border-color: rgba(0, 0, 0, 0.3);
 }
 
 .card-columns {
-  column-count: 2;
+  column-count: 2 !important;
 }
 
 .card-columns{
   text-align:left;
+  margin: 10px;
 }
 .tf {
   color: #1f2f5f;
@@ -139,7 +141,7 @@ h2.evt-body{
   font-size: 3vw;
 }
 
-h1:before, h3:after {
+h1:before, h1:after {
   content: "";
   position: absolute;
   bottom: 18px;
@@ -151,4 +153,65 @@ h1:before, h3:after {
 
 .app.menu-cont{
   background: #fff;
+}
+
+
+.fancy {
+  line-height: 0.5;
+  text-align: center;
+  font-family: 'CubanoRegular';
+  font-size: 3.1vw;
+  margin-bottom: 3.2vw;
+}
+.fancy span {
+  display: inline-block;
+  position: relative;
+}
+.fancy span:before,
+.fancy span:after {
+  content: "";
+  position: absolute;
+  height: 5px;
+  border-bottom: 1px solid  #1f2f5f;
+  border-top: 1px solid  #1f2f5f;
+  top: 0;
+  margin-top: 14px;
+  width: 200px;
+}
+.fancy span:before {
+  right: 100%;
+  margin-right: 15px;
+}
+.fancy span:after {
+  left: 100%;
+  margin-left: 15px;
+}
+
+div.ext{
+  display: inline-block;
+}
+
+.ext img{
+  width:4vw;
+  padding-left: 40px;
+}
+.card h3{
+   font-size: 2.4vw;
+}
+
+.card .small{
+  font-size: 1.5vw;
+  margin-bottom: 3px;
+
+}
+
+.wait{
+  font-size: 3vw;
+  color:#fff;
+  padding-top: 40px;
+}
+
+.wait2{
+  font-size: 3vw;
+  padding-top: 40px;
 }
