@@ -55,10 +55,12 @@ class App extends Component {
     request
         .get(this.server_name + this.monitor +'?'+ randomstring.generate(4))
         .then((res) => {
-              this.setState({
-              isLoaded: true,
-              photos: res.body
-            })
+            if (typeof res.body.length != 'undefined' && res.body.length > 0){
+                this.setState({
+                    isLoaded: true,
+                    photos: res.body
+                })
+            }
         })
         .catch(err => {
             // err.message, err.response
@@ -165,7 +167,7 @@ class App extends Component {
           case "5":
               widget =
               <div className="app menu-cont">
-                  <Menu data={this.state.static}  />
+                  <Menu data={this.state.static} monitor={this.monitor}  />
               </div>
               break;
           default:

@@ -3,6 +3,15 @@ import React, {Component, useState} from 'react';
 import request from "superagent";
 import { Textfit } from 'react-textfit';
 
+const parseJson = async response => {
+    const text = await response.text()
+    try{
+        const json = JSON.parse(text)
+        return json
+    } catch(err) {
+        return null;
+    }
+}
 
 class onepage extends Component {
 
@@ -11,6 +20,7 @@ class onepage extends Component {
         super(props);
         this.state = {
             error: null,
+            counter: 0,
             isLoaded: false,
             items: []
         };
@@ -18,7 +28,7 @@ class onepage extends Component {
 
     componentDidMount() {
         const self = this;
-
+        setInterval((this.load_data), 180000); // 3 minutes in milliseconds
 
         fetch('https://monitors.viterbo.edu/scrape/' + this.props.data)
             .then(res => res.json())
@@ -39,18 +49,42 @@ class onepage extends Component {
                     });
                 }
             )
+    }
 
+
+
+    load_data = () => {
+        //const self = this;
+        fetch('https://monitors.viterbo.edu/scrape/' + this.props.data)
+            .then(parseJson)
+            .then(
+                (result) => {
+                    if (result && typeof result.body.length != 'undefined' && result.body.length > 0){
+                        this.setState({
+                            isLoaded: true,
+                            items: result.items
+                        });
+                    }
+                },
+                // Note: it's important to handle errors here
+                // instead of a catch() block so that we don't swallow
+                // exceptions from actual bugs in components.
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
         request
-            .get('https://monitors.viterbo.edu/statics/' + this.props.data)
+            .get('https://monitors.viterbo.edu/alerts/reportslide.php?monitor=' + this.props.monitor +  "&slide=" + 0)
             .then((res) => {
-                this.setState({
-                    data: res,
-                    feed: 0,
-                })
+
             })
             .catch(err => {
                 // err.message, err.response
             });
+
     }
 
     renderFooter(){
@@ -78,15 +112,16 @@ class onepage extends Component {
     }
 
 
+    componentWillMount
+
+
 
 
     render() {
         const vegan = '../media/veganicon.png';
         const vegi=  '../media/vegicon.png';
         const { error, isLoaded, items } = this.state;
-
         const name = this.props.data.split('.')[0].toUpperCase();
-
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
