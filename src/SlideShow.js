@@ -119,8 +119,13 @@ class SlideShow extends Component {
                 </ul>
                 break;
             case 0:
-                widget = <Slide slide={this.props.slides[this.state.slideIndex]} alt={this.props.imageAlt}
-                       mode={this.state.isMap}/>
+                if (this.props.slides && typeof this.props.slides.length != 'undefined' && this.props.slides.length > 0){
+                    widget = <Slide slide={this.props.slides[this.state.slideIndex]} alt={this.props.imageAlt}
+                                    mode={this.state.isMap}/>
+                }
+                else{
+                    widget = <h1>Empty Slide</h1>
+                }
                 break;
             case 1:
                 widget = <div className="slide-container">
@@ -128,8 +133,13 @@ class SlideShow extends Component {
                     </div>
                 break;
             case 2:
-                widget = <Slide slide={this.props.slides[this.state.slideIndex]} alt={this.props.imageAlt}
-                                mode={this.state.isMap}/>
+                if (this.props.slides && typeof this.props.slides.length != 'undefined' && this.props.slides.length > 0){
+                    widget = <Slide slide={this.props.slides[this.state.slideIndex]} alt={this.props.imageAlt}
+                                    mode={this.state.isMap}/>
+                }
+                else{
+                    widget = <h1>Empty Slide</h1>
+                }
                 break;
             default:
                 widget =  "";

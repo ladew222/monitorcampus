@@ -31,7 +31,7 @@ class onepage extends Component {
         setInterval((this.load_data), 180000); // 3 minutes in milliseconds
 
         fetch('https://monitors.viterbo.edu/scrape/' + this.props.data)
-            .then(res => res.json())
+            .then(parseJson)
             .then(
                 (result) => {
                     this.setState({
@@ -59,7 +59,7 @@ class onepage extends Component {
             .then(parseJson)
             .then(
                 (result) => {
-                    if (result && typeof result.body.length != 'undefined' && result.body.length > 0){
+                    if (result &&  result.items && typeof result.items.length != 'undefined' && result.items.length > 0){
                         this.setState({
                             isLoaded: true,
                             items: result.items
