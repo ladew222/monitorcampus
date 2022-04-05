@@ -133,7 +133,7 @@ class SlideShow extends Component {
                     </div>
                 break;
             case 2:
-                if (this.props.slides && typeof this.props.slides.length != 'undefined' && this.props.slides.length > 0){
+                if (this.props.slides && typeof this.props.slides.length != 'undefined' && this.props.slides.length > 0 && this.props.slides[this.state.slideIndex] && this.props.slides[this.state.slideIndex] != 'undefined'){
                     widget = <Slide slide={this.props.slides[this.state.slideIndex]} alt={this.props.imageAlt}
                                     mode={this.state.isMap}/>
                 }
@@ -155,18 +155,27 @@ class SlideShow extends Component {
 
 export default SlideShow;
 
-
-
+function getSafe(fn, defaultVal) {
+    try {
+        return fn();
+    } catch (e) {
+        return defaultVal;
+    }
+}
 
 class Slide extends React.Component {
     constructor(props) {
         super(props);
     }
     render() {
+        let img;
+        if (1==1){
+            img = <img src={'https://www.viterbo.edu' + getSafe(() => this.props.slide.field_scroller_image, 'nothing')} alt={this.props.imageAlt} />;
+        }
         return (
             <div className="outer">
                 <div className="slide-container">
-                    <img src={'https://www.viterbo.edu' + this.props.slide.field_scroller_image} alt={this.props.imageAlt} />
+                    {img}
                 </div>
             </div>
         );
