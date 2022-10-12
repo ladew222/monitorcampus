@@ -36,7 +36,7 @@
     "textfill": "^1.0.2",
     "url-search-params": "^1.1.0",
     "video-react": "^0.14.1",
-    "video.js": "^7.12.3",
+    "video.js": "^7.20.3",
     "wait-on": "^5.3.0"
   },
   "scripts": {
